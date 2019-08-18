@@ -18,18 +18,13 @@
 ```
 .
 ├── README.md
-├── app.js
-├── app.json
-├── app.wxss
 ├── config-develop.js        //开发环境数据库配置文件
 ├── config-production.js     //生产环境数据库配置文件
 ├── config-test.js           //测试环境数据库配置文件
 ├── config.js                //配置文件入口
 ├── controllers
 │   ├── api.js               //编写各种接口的文件
-│   └── records.js           //业务逻辑文件，后端接口有时会用到很多逻辑上的复杂的操作，可以将这些操作封装到这个文件中，写接口时直接调用即可
 ├── db.js                    //统一规范model的文件
-├── images
 ├── model.js                 //统一导入各种model的文件
 ├── models
 │   ├── findGood.js
@@ -44,68 +39,9 @@
 │   ├── personTemporary.js
 │   └── userInfor.js
 ├── package.json             //所有额外导入的包所依赖的环境都在这个文件中列出，使用时只需执行npm install即可，就将所有依赖关系安装好了
-├── pages
-│   ├── find
-│   │   ├── 1.png
-│   │   ├── 2.png
-│   │   ├── 3.png
-│   │   ├── details.js
-│   │   ├── details.json
-│   │   ├── details.wxml
-│   │   ├── details.wxss
-│   │   └── release
-│   │       ├── people.js
-│   │       ├── people.json
-│   │       ├── people.wxml
-│   │       ├── people.wxss
-│   │       ├── things.js
-│   │       ├── things.json
-│   │       ├── things.wxml
-│   │       └── things.wxss
-│   ├── index
-│   │   ├── 2.png
-│   │   ├── index.js
-│   │   ├── index.json
-│   │   ├── index.wxml
-│   │   └── index.wxss
-│   ├── logs
-│   │   ├── logs.js
-│   │   ├── logs.json
-│   │   ├── logs.wxml
-│   │   └── logs.wxss
-│   ├── message
-│   │   ├── message.js
-│   │   ├── message.json
-│   │   ├── message.wxml
-│   │   └── message.wxss
-│   ├── my
-│   │   ├── 1.png
-│   │   ├── edit.js
-│   │   ├── edit.json
-│   │   ├── edit.wxml
-│   │   ├── edit.wxss
-│   │   ├── my.js
-│   │   ├── my.json
-│   │   ├── my.wxml
-│   │   ├── my.wxss
-│   │   └── myfounds
-│   │       ├── people.js
-│   │       ├── people.json
-│   │       ├── people.wxml
-│   │       ├── people.wxss
-│   │       ├── things.js
-│   │       ├── things.json
-│   │       ├── things.wxml
-│   │       └── things.wxss
-│   └── searchPeople
-│       ├── searchPeople.js
-│       ├── searchPeople.json
-│       ├── searchPeople.wxml
-│       └── searchPeople.wxss
-├── project.config.json
 ├── rest.js                   //统一报错和绑定rest方法
-├── sitemap.json
-├── sitemap9.json
+├── records.js           //业务逻辑文件，后端接口有时会用到很多逻辑上的复杂的操作，可以将这些操作封装到这个文件中，写接口时直接调用即可
+├── koa.js              //专门使用koa的js文件
 ├── train.txt                 //数据库建库文件
 └── utils                     //一些工具类所构成的文件夹
     └── util.js
