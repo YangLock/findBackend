@@ -182,37 +182,37 @@ module.exports = {
   },
   'POST /api/release/findPerson': async(ctx, next) => {
     console.log('release a good（pick up）');
-    releasePersons();
+    records.releasePersons();
     // 检验机制先不写
   },
   'POST /api/release/findGood': async(ctx, next) => {
     console.log('release a good(lost)');
-    releaseGoods();
+    records.releaseGoods();
     // 检验机制先不写
   },
   'POST /api/release/goodCom': async(ctx, next) => {
     console.log('release a message');
-    releasemessages();
+    records.releasemessages();
     // 检验机制先不写
   },
-  'GET /api/get/findGood/:kind': async (ctx, next) => {
+  'GET /api/get/findGood/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
-    var result=getfindgoods(kind);
+    var result = records.getfindgoods(kind);
     ctx.response.body = result;
   },
-  'GET /api/get/findPerson/:kind': async (ctx, next) => {
+  'GET /api/get/findPerson/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
-    var result = getfindpersons(kind);
+    var result = records.getfindpersons(kind);
     ctx.response.body = result;
   },
-  'GET /api/get/searchGood/:keyword': async (ctx, next) => {
+  'GET /api/get/searchGood/:keyword': async(ctx, next) => {
     var keyword = ctx.params.keyword;
-    var result = getsearchgoods(keyword);
+    var result = records.getsearchgoods(keyword);
     ctx.response.body = result;
   },
-  'GET /api/get/searchPerson/:keyword': async (ctx, next) => {
+  'GET /api/get/searchPerson/:keyword': async(ctx, next) => {
     var keyword = ctx.params.keyword;
-    var result = getsearchpersons(keyword);
+    var result = records.getsearchpersons(keyword);
     ctx.response.body = result;
   }
 };
