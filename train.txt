@@ -1,16 +1,19 @@
 create database Train;
 use  train;
 create table userInfor(
-user_id numeric(12,0) not null comment'用户ID',
+user_id varchar(64) not null comment'用户ID',
 user_avatar varchar(100) comment'用户头像',
 user_name varchar(20) comment'用户姓名',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',
 tel_num numeric(11,0) comment'手机号',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key(user_id)
 );
 create table find_good(
-good_id numeric(12,0) not null comment'物品ID',
+good_id varchar(64) not null comment'物品ID',
 good_title varchar(70) comment'标题',
 lost_place varchar(50) comment'遗失地点' ,
 detail varchar(120) comment'详细描述',
@@ -26,17 +29,20 @@ p5 varchar(100) comment'图5',
 p6 varchar(100) comment'图6',
 p7 varchar(100) comment'图7',
 p8 varchar(100) comment'图8',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (good_id),
 foreign key(deliver) references userInfor(user_id) on delete set null
 );
 create table find_person(
-good_id numeric(12,0) not null comment'物品ID',
+good_id varchar(64) not null comment'物品ID',
 good_title varchar(70) comment'标题',
 find_place varchar(50) comment'拾遗地点' ,
 detail varchar(120) comment'详细描述',
 typeof varchar(16) comment'物品类型',
 deliver_time datetime comment'发布时间',
-deliver numeric(12,0) comment'发布者',
+deliver varchar(64) comment'发布者',
 stateof varchar(10) comment'物品状态',
 p1 varchar(100) comment'图1',
 p2 varchar(100) comment'图2',
@@ -46,53 +52,74 @@ p5 varchar(100) comment'图5',
 p6 varchar(100) comment'图6',
 p7 varchar(100) comment'图7',
 p8 varchar(100) comment'图8',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (good_id),
 foreign key(deliver) references userInfor(user_id) on delete set null
 );
 create table good_temporary(
-good_id numeric(12,0) not null comment'物品ID',
+good_id varchar(64) not null comment'物品ID',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',
 tel_num numeric(11,0) comment'手机号',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (good_id),
 foreign key(good_id) references find_good(good_id)
 );
 create table person_temporary(
-good_id numeric(12,0) not null comment'物品ID',
+good_id varchar(64) not null comment'物品ID',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',
 tel_num numeric(11,0) comment'手机号',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (good_id),
 foreign key(good_id) references find_person(good_id)
 );
 create table my_find_good(
-my_id numeric(12,0) not null comment'我的ID',
-good_id numeric(12,0) comment'物品ID',
+my_id varchar(64) not null comment'我的ID',
+good_id varchar(64) comment'物品ID',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (my_id),
 foreign key(good_id) references find_good(good_id)
 );
 create table my_find_person(
-my_id numeric(12,0) not null comment'我的ID',
-good_id numeric(12,0) comment'物品ID',
+my_id varchar(64) not null comment'我的ID',
+good_id varchar(64) comment'物品ID',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (my_id),
 foreign key(good_id) references find_person(good_id)
 );
 create table good_com(
-com_id numeric(12,0) not null comment'留言ID',
+com_id varchar(64) not null comment'留言ID',
 com_time datetime comment'留言时间',
 com_detail varchar(120) comment'留言内容',
-com_deliver numeric(12,0) comment'留言者',
-good_id numeric(12,0) comment'物品ID',
+com_deliver varchar(64) comment'留言者',
+good_id varchar(64) comment'物品ID',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (com_id),
 foreign key(good_id) references find_good(good_id)on delete set null,
 foreign key(com_deliver) references userInfor(user_id)on delete set null
 );
 create table person_com(
-com_id numeric(12,0) not null comment'留言ID',
+com_id varchar(64) not null comment'留言ID',
 com_time datetime comment'留言时间',
 com_detail varchar(120) comment'留言内容',
-com_deliver numeric(12,0) comment'留言者',
-good_id numeric(12,0) comment'物品ID',
+com_deliver varchar(64) comment'留言者',
+good_id varchar(64) comment'物品ID',
+createdAt numeric(20,0),
+updatedAt numeric(20,0),
+version numeric(1,0),
 primary key (com_id),
 foreign key(good_id) references find_person(good_id)on delete set null,
 foreign key(com_deliver) references userInfor(user_id)on delete set null

@@ -2,7 +2,7 @@ const db = require('../db');
 
 module.exports = db.defineModel('find_good',{
     good_id: {
-        type: db.BIGINT(12),
+        type: db.STRING(64),
         primaryKey: true,
         allowNull: false
     },
@@ -10,9 +10,9 @@ module.exports = db.defineModel('find_good',{
     lost_place: db.STRING(50),
     detail: db.STRING(120),
     typeof: db.STRING(16),
-    deliver_time: db.DATE,
+    deliver_time: db.DATE(),
     deliver: {
-        type: db.BIGINT(12),
+        type: db.STRING(64),
         references: {
             model: userInfo,
             key: user_id

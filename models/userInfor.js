@@ -3,7 +3,7 @@ const db = require('../db');
 module.exports = db.defineModel('userInfo',{
     user_id: {
         primaryKey: true,
-        type: db.BIGINT(12),
+        type: db.STRING(64),
         allowNull: false
     },
     user_avatar: db.STRING(100),
