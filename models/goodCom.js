@@ -2,7 +2,7 @@ const db = require('../db');
 
 module.exports = db.defineModel('good_com',{
     com_id: {
-        type: db.STRING(64),
+        type: db.BIGINT(12),
         primaryKey: true,
         allowNull: false
     },
@@ -16,7 +16,7 @@ module.exports = db.defineModel('good_com',{
         }
     },
     good_id: {
-        type: db.STRING(64),
+        type: db.BIGINT(12),
         references: {
             model: find_good,
             key: good_id
