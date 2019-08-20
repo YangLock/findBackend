@@ -11,15 +11,15 @@ module.exports = db.defineModel('person_com',{
     com_deliver: {
         type: db.STRING(64),
         references: {
-            model: userInfor,
-            key: user_id
+            model: 'userInfor',
+            key: 'user_id'
         }
     },
     good_id: {
         type: db.BIGINT(12),
         references: {
-            model: find_person,
-            key: good_id
+            model: 'find_person',
+            key: 'good_id'
         }
     }
 });

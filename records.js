@@ -1,7 +1,7 @@
 const model = require('./model');
 let findGood = model.findGood;
 let findPerson = model.findPerson;
-let userInfo = model.userInfo;
+let userInfor = model.userInfor;
 let goodCom = model.goodCom;
 let personCom = model.personCom;
 let goodTemporary = model.goodTemporary;
@@ -19,6 +19,27 @@ module.exports = {
       });
       await find_goods.destroy();
     })();
+  },
+  getuserinfor:(id)=>{
+    async()=>{
+      var get=await userInfor.findAll({
+        where: {
+          user_id: id
+        }
+      });
+      console.log(get);
+      return get;
+    }
+  },
+  getuserfindgoods:(id)=>{
+    (async()=>{
+      var get=await findGood.findAll({
+        where: {
+          deliver: id
+        }
+      });
+      return get;
+    })()
   },
   deleteRecordFromPerson: (id) => {
     (async() => {

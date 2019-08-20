@@ -14,8 +14,8 @@ module.exports = db.defineModel('find_person',{
     deliver: {
         type: db.STRING(64),
         references: {
-            model: userInfo,
-            key: user_id
+            model: 'userInfor',
+            key: 'user_id'
         }
     },
     stateof: db.STRING(10),

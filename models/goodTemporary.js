@@ -5,8 +5,8 @@ module.exports = db.defineModel('good_temporary',{
         type: db.BIGINT(12),
         primaryKey: true,
         references: {
-            model: find_good,
-            key: good_id
+            model: 'find_good',
+            key: 'good_id'
         },
         allowNull: false
     },

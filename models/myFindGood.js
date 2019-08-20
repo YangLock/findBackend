@@ -9,8 +9,8 @@ module.exports = db.defineModel('my_find_good',{
     good_id: {
         type: db.BIGINT(12),
         references: {
-            model: find_good,
-            key: good_id
+            model: 'find_good',
+            key: 'good_id'
         }
     }
 });

@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
-
+let config=require('./config.js')
 console.log('init sequelize...');
-var sequelize = new Sequelize('developTrain','root','victor0306',{
-    host: 'localhost',
-    dialect: 'mysql',
+var sequelize = new Sequelize(config.database,config.username,config.password,{
+    host: config.host,
+    dialect: config.dialect,
     pool:{
         max: 5,
         min: 0,

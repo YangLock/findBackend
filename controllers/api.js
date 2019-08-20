@@ -18,6 +18,7 @@
  */
 const APIError = require('../rest').APIError;
 const records = require('../records');
+const multer=require('multer');
 var storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
@@ -40,15 +41,11 @@ module.exports = {
   }},
   'GET /getuserfindgoods/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var found = await find_good.findAll({
-      where: {
-        deliver: user_id
-      }
-    });
+    var found = records.getuserfindgoods(user_id);
     //console.log(`find ${userInfor.length} user:`);
-    for (let p of found) {
-      console.log(JSON.stringify(p));
-    }
+    // for (let p of found) {
+    //   console.log(JSON.stringify(p));
+    // }
     ctx.response.body = found;
   },
   'GET /getuserfindperson/:user_id': async(ctx, next) => {
@@ -66,15 +63,12 @@ module.exports = {
   },
   'GET /getuserinfor/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var get = await userInfor.findAll({
-      where: {
-        user_id: user_id
-      }
-    });
+    var get = records.getuserinfor(user_id);
     //console.log(`find ${get.length} user:`);
     for (let p of get) {
       console.log(JSON.stringify(p));
     }
+    console.log(get);
     ctx.response.body = get;
   },
   'Get /getmessage/:user_id': async(ctx, next) => {

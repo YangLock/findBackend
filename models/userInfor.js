@@ -1,6 +1,6 @@
 const db = require('../db');
 
-module.exports = db.defineModel('userInfo',{
+module.exports = db.defineModel('userInfor',{
     user_id: {
         primaryKey: true,
         type: db.STRING(64),
