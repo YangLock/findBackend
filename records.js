@@ -4,6 +4,8 @@ let findPerson = model.findPerson;
 let userInfo = model.userInfo;
 let goodCom = model.goodCom;
 let personCom = model.personCom;
+let goodTemporary = model.goodTemporary;
+let personTemporary = model.personTemporary;
 /**
  * 将实现接口需要的逻辑单独写成了几个函数，在接口文件中直接调用应该就可以
  */
@@ -35,7 +37,10 @@ module.exports = {
           good_id: id
         }
       });
+      var now = Date.now();
       find_goods.stateof = 'found';
+      find_goods.updatedAt = now;
+      find_goods.version++;
       await find_goods.save();
     })();
     return find_goods;
@@ -47,7 +52,10 @@ module.exports = {
           good_id: id
         }
       });
+      var now = Date.now();
       find_people.stateof = 'claimed';
+      find_people.updatedAt = now;
+      find_people.version++;
       await find_people.save();
     })();
     return find_people;
@@ -59,11 +67,12 @@ module.exports = {
           good_id: id
         }
       });
-      var user = await userInfo.findAll({
+      var good_temporary = await goodTemporary.findAll({
         where: {
-          user_id: find_people.deliver
+          good_id: id
         }
       });
+      var now = Date.now();
       const {
         pictures,
         title,
@@ -88,17 +97,23 @@ module.exports = {
       find_goods.p6 = pictures[5];
       find_goods.p7 = pictures[6];
       find_goods.p8 = pictures[7];
+      find_goods.createdAt = now;
+      find_goods.updatedAt = now;
+      find_goods.version++;
 
-      user.user_name = who;
-      user.tel_num = tel;
-      user.wechat_num = wechat;
-      user.qq_num = qq;
+      good_temporary.contacter = who;
+      good_temporary.wechat_num = wechat;
+      good_temporary.qq_num = qq;
+      good_temporary.tel_num = tel;
+      good_temporary.createdAt = now;
+      good_temporary.updatedAt = now;
+      good_temporary.version++;
       await find_people.save();
-      await user.save();
+      await good_temporary.save();
     })();
     return {
       find_goods,
-      user
+      good_temporary
     };
   },
   reeditRecordFromPerson: (id) => {
@@ -108,11 +123,12 @@ module.exports = {
           good_id: id
         }
       });
-      var user = await userInfo.findAll({
+      var person_temporary = await personTemporary.findAll({
         where: {
-          user_id: find_people.deliver
+          good_id: id
         }
       });
+      var now = Date.now();
       const {
         pictures,
         title,
@@ -137,17 +153,23 @@ module.exports = {
       find_people.p6 = pictures[5];
       find_people.p7 = pictures[6];
       find_people.p8 = pictures[7];
+      find_people.createdAt = now;
+      find_people.updatedAt = now;
+      find_people.version++;
 
-      user.user_name = who;
-      user.tel_num = tel;
-      user.wechat_num = wechat;
-      user.qq_num = qq;
+      person_temporary.contacter = who;
+      person_temporary.wechat_num = wechat;
+      person_temporary.qq_num = qq;
+      person_temporary.tel_num = tel;
+      person_temporary.createdAt = now;
+      person_temporary.updatedAt = now;
+      person_temporary.version++;
       await find_people.save();
-      await user.save();
+      await person_temporary.save();
     })();
     return {
       find_people,
-      user
+      person_temporary
     };
   },
   editUserInfo: (id) => {
@@ -157,6 +179,7 @@ module.exports = {
           user_id: id
         }
       });
+      var now = Date.now();
       const {
         avatar,
         userID,
@@ -171,6 +194,9 @@ module.exports = {
       userinfo.wechat_num = wechat;
       userinfo.tel_num = tel;
       userinfo.qq_num = qq;
+      user.createdAt = now;
+      user.updatedAt = now;
+      user.version++;
       await userinfo.save();
     })();
     return userinfo;
@@ -182,7 +208,9 @@ module.exports = {
           good_id: id
         }
       });
+      var now = Date.now();
       find_goods.deliver_time = new Date();
+      find_goods.updatedAt = now;
       await find_goods.save();
     })();
     return find_goods;
@@ -194,7 +222,9 @@ module.exports = {
           good_id: id
         }
       });
+      var now = Date.now();
       find_people.deliver_time = new Date();
+      find_people.updatedAt = now;
       await find_people.save();
     })();
     return find_people;

@@ -10,6 +10,7 @@ module.exports = db.defineModel('person_temporary',{
         },
         allowNull: false
     },
+    contacter: db.STRING(20),
     wechat_num: db.STRING(20),
     qq_num: db.BIGINT(15),
     tel_num: db.BIGINT(11)

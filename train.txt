@@ -60,6 +60,7 @@ foreign key(deliver) references userInfor(user_id) on delete set null
 );
 create table good_temporary(
 good_id numeric(12) not null comment'物品ID',
+contacter varchar(20) comment'联系人',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',
 tel_num numeric(11,0) comment'手机号',
@@ -71,6 +72,7 @@ foreign key(good_id) references find_good(good_id)
 );
 create table person_temporary(
 good_id numeric(12) not null comment'物品ID',
+contacter varchar(20) comment'联系人',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',
 tel_num numeric(11,0) comment'手机号',
