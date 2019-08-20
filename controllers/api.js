@@ -18,12 +18,26 @@
  */
 const APIError = require('../rest').APIError;
 const records = require('../records');
+var storage = multer.diskStorage({
+  //文件保存路径
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  //修改文件名称
+  filename: function (req, file, cb) {
+    var fileFormat = (file.originalname).split(".");
+    cb(null,Date.now() + "." + fileFormat[fileFormat.length - 1]);
+  }
+})
+//加载配置
+var upload = multer({ storage: storage });
 
 module.exports = {
-  'DELETE /api/delete/findGood/:id': async(ctx, next) => {
-    console.log('delete record ${ctx.params.id}...');
-    records.deleteRecordFromGood(ctx.params.id);
-  },
+  'POST /upload': function(){upload.single('file'); async (ctx, next) => {
+    ctx.body = {
+      filename: ctx.req.file.filename//返回文件名
+    }
+  }},
   'GET /getuserfindgoods/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
     var found = await find_good.findAll({
