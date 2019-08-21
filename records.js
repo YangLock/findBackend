@@ -21,18 +21,18 @@ module.exports = {
     })();
   },
   getuserinfor:(id)=>{
-    async()=>{
+     return (async()=>{
       var get=await userInfor.findAll({
         where: {
           user_id: id
         }
       });
-      console.log(get);
+      //console.log(get);
       return get;
-    }
+    })();
   },
   getuserfindgoods:(id)=>{
-    (async()=>{
+    return (async()=>{
       var get=await findGood.findAll({
         where: {
           deliver: id
@@ -40,6 +40,58 @@ module.exports = {
       });
       return get;
     })()
+  },
+  getuserfindperson:(id)=>{
+    return (async()=>{
+      var get=await findPerson.findAll({
+        where: {
+          deliver: id
+        }
+      });
+      return get;
+    })()
+  },
+  getmessage:(user_id)=>{
+    return (async()=>{
+      var findgood = await findGood.findAll({
+        where: {
+          deliver: user_id
+        }
+      });
+      var findgoodid = new Array(findgood.length);
+      var l = 0;
+      for (l = 0; l < findgood.length; l++) {
+        findgoodid[l] = findgood[l].good_id;
+      }
+      var findperson = await findPerson.findAll({
+        where: {
+          deliver: user_id
+        }
+      });
+      var findpersonid = new Array(findperson.length);
+      for (l = 0; l < findperson.length; l++) {
+        findpersonid[l] = findperson[l].good_id;
+      }
+      var good_comment = await goodCom.findAll({
+        where: {
+          good_id: findgoodid
+        }
+      });
+      var person_comment = await personCom.findAll({
+        where: {
+          good_id: findpersonid
+        }
+      });
+      var com = new Array(good_comment.length + person_comment.length);
+    var i = 0;
+    for (i = 0; i < good_comment.length; i++) {
+      com[i] = good_comment[i];
+    }
+    for (i = 0; i < person_comment.length; i++) {
+      com[good_comment.length + i] = person_comment[i];
+    }
+    return com;
+    })();
   },
   deleteRecordFromPerson: (id) => {
     (async() => {
@@ -382,18 +434,15 @@ module.exports = {
     })();
   },
   getfindgoods: (kind) => {
-    (async() => {
+    return (async() => {
+      var goods=null;
       if (kind == "all") {
-        findGood.findAll()
-          .then(function(goods) {
-            for (let good in goods) {
-              console.log(JSON.stringify(good));
-            }
-          }).catch(function(err) {
-            console.log(error);
-          });
+        goods=findGood.findAll()
+        .catch(function(err) {
+          console.log(error);
+        });
       } else {
-        var goods = await findGood.findAll({
+        goods = await findGood.findAll({
           where: {
             typeof: kind
           }
@@ -407,18 +456,15 @@ module.exports = {
     })();
   },
   getfindpersons: (kind) => {
-    (async() => {
+    return (async() => {
+      var goods=null;
       if (kind == "all") {
-        var goods = await findPerson.findAll()
-          .then(function(goods) {
-            for (let good in goods) {
-              console.log(JSON.stringify(good));
-            }
-          }).catch(function(err) {
+        goods = await findPerson.findAll()
+          .catch(function(err) {
             console.log(error);
           });
       } else {
-        var goods = await findPerson.findAll({
+        goods = await findPerson.findAll({
           where: {
             typeof: kind
           }
@@ -482,6 +528,18 @@ module.exports = {
       }
       return arr;
     })();
+  },
+  checkuser:(user_id,user_name)=>{
+    (async()=>{
+      var exist=await userInfor.findAll({
+        where:{
+          user_id:user_id
+        }
+      });
+      if (exist==null){
+        
+      }
+    })()
   }
 
 };

@@ -41,20 +41,16 @@ module.exports = {
   }},
   'GET /getuserfindgoods/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var found = records.getuserfindgoods(user_id);
+    var found = await records.getuserfindgoods(user_id);
     //console.log(`find ${userInfor.length} user:`);
-    // for (let p of found) {
-    //   console.log(JSON.stringify(p));
-    // }
+    for (let p of found) {
+      console.log(JSON.stringify(p));
+    }
     ctx.response.body = found;
   },
   'GET /getuserfindperson/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var found = await find_person.findAll({
-      where: {
-        deliver: user_id
-      }
-    });
+    var found = await records.getuserfindperson;
     //console.log(`find ${found.length} user:`);
     for (let p of found) {
       console.log(JSON.stringify(p));
@@ -63,59 +59,22 @@ module.exports = {
   },
   'GET /getuserinfor/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var get = records.getuserinfor(user_id);
+    var get=await records.getuserinfor(user_id);
     //console.log(`find ${get.length} user:`);
     for (let p of get) {
       console.log(JSON.stringify(p));
     }
-    console.log(get);
+    //console.log(get);
     ctx.response.body = get;
   },
-  'Get /getmessage/:user_id': async(ctx, next) => {
+  'GET /getmessage/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var findgood = await find_good.findAll({
-      where: {
-        deliver: user_id
-      }
-    });
-    var findgoodid = new Array(findgood.length);
-    var l = 0;
-    for (l = 0; l < findgood.length; l++) {
-      findgoodid[l] = findgood[l].good_id;
-    }
-    var findperson = await find_person.findAll({
-      where: {
-        deliver: user_id
-      }
-    });
-    var findpersonid = new Array(findperson.length);
-    for (l = 0; l < findperson.length; l++) {
-      findpersonid[l] = findperson[l].good_id;
-    }
-    var good_comment = await good_com.findAll({
-      where: {
-        good_id: findgoodid
-      }
-    });
-    var person_comment = await person_com.findAll({
-      where: {
-        good_id: findpersonid
-      }
-    });
-    var com = new Array(good_comment.length + person_comment.length);
-    var i = 0;
-    for (i = 0; i < good_comment.length; i++) {
-      com[i] = good_comment[i];
-    }
-    for (i = 0; i < person_comment.length; i++) {
-      com[good_comment.length + i] = person_comment[i];
-    }
-    console.log(com);
-    ctx.response.body = com;
-    /*console.log(`find ${userInfor.length} user:`);
-    for (let p of userInfor) {
+    var com=await records.getmessage(user_id);
+    // console.log(`find ${userInfor.length} user:`);
+    for (let p of com) {
         console.log(JSON.stringify(p));
-    }*/
+    }
+    ctx.response.body = com;
   },
   'DELETE /api/delete/findGood/:id': async(ctx, next) => {
     console.log('delete record ${ctx.params.id}...');
@@ -205,12 +164,12 @@ module.exports = {
   },
   'GET /api/get/findGood/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
-    var result = records.getfindgoods(kind);
+    var result = await records.getfindgoods(kind);
     ctx.response.body = result;
   },
   'GET /api/get/findPerson/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
-    var result = records.getfindpersons(kind);
+    var result = await records.getfindpersons(kind);
     ctx.response.body = result;
   },
   'GET /api/get/searchGood/:keyword': async(ctx, next) => {
