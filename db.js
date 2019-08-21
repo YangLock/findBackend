@@ -16,12 +16,12 @@ var defineModel = function(name, attributes) {
     for (let key in attributes) {
         let value = attributes[key];
         if (typeof value === 'object' && value['type']) {
-            value.allowNull = value.allowNull || false;
+            value.allowNull = value.allowNull || true;
             attrs[key] = value;
         } else {
             attrs[key] = {
                 type: value,
-                allowNull: false
+                allowNull: true
             };
         }
     }
@@ -46,9 +46,6 @@ var defineModel = function(name, attributes) {
             beforeValidate: function (obj) {
                 let now = Date.now();
                 if (obj.isNewRecord) {
-                    if (!obj.id) {
-                        obj.id = generateId();
-                    }
                     obj.createdAt = now;
                     obj.updatedAt = now;
                     obj.version = 0;

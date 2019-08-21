@@ -1,8 +1,8 @@
-create database Train;
+﻿create database Train;
 use  train;
 create table userInfor(
 user_id varchar(64) not null comment'用户ID',
-user_avatar varchar(100) comment'用户头像',
+user_avatar varchar(150) comment'用户头像',
 user_name varchar(20) comment'用户姓名',
 wechat_num varchar(20) comment'微信号',
 qq_num  numeric(15,0) comment'QQ号',

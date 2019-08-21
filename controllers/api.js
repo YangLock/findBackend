@@ -19,6 +19,7 @@
 const APIError = require('../rest').APIError;
 const records = require('../records');
 const multer=require('multer');
+var querystring = require('querystring');
 var storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
@@ -181,5 +182,13 @@ module.exports = {
     var keyword = ctx.params.keyword;
     var result = records.getsearchpersons(keyword);
     ctx.response.body = result;
+  },
+  'GET /api/get/checkuser':async(ctx,next)=>{
+    var params = querystring.parse(ctx.req._parsedUrl.query);
+    var user_id=params.user_id;
+    var user_name=params.user_name;
+    var user_avatar=params.user_avatar;
+    records.checkuser(user_id,user_name,user_avatar);
+    ctx.response.body=('checked');
   }
 };

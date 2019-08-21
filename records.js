@@ -529,17 +529,24 @@ module.exports = {
       return arr;
     })();
   },
-  checkuser:(user_id,user_name)=>{
+  checkuser:(user_id,user_name,user_avatar)=>{
     (async()=>{
       var exist=await userInfor.findAll({
         where:{
           user_id:user_id
         }
       });
-      if (exist==null){
-        
+      if (exist.length==0){
+        var newone = await userInfor.create({
+          user_id: user_id,
+          user_avatar:user_avatar,
+          user_name: user_name,
+          wechat_num: null,
+          qq_num: null,
+          tel_num: null
+      })
       }
-    })()
+    })();
   }
 
 };
