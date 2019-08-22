@@ -302,7 +302,7 @@ module.exports = {
     })();
     return find_people;
   },
-  releaseGoods: (user_id, good_id) => {
+  releaseGoods: () => {
     (async () => {
       var {
         deliver,
@@ -310,7 +310,6 @@ module.exports = {
         pictures,
         title,
         type,
-        who,
         place,
         describe,
         tel,
@@ -320,6 +319,7 @@ module.exports = {
       } = ctx.request.body;
 
       var time = new Date();
+      var now = Date.now();
 
       var good = await findGood.create({
         good_id: good_id,
@@ -337,8 +337,8 @@ module.exports = {
         p6: pictures[5],
         p7: pictures[6],
         p8: pictures[7],
-        createdAt: time,
-        updatedAt: time,
+        createdAt: now,
+        updatedAt: now,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
@@ -350,15 +350,15 @@ module.exports = {
           wechat_num: wechat,
           qq_num: qq,
           tel_num: tel,
-          createdAt: time,
-          updatedAt: time,
+          createdAt: now,
+          updatedAt: now,
           version: 0
         });
         console.log('created: ' + JSON.stringify(goodTemp));
       }
     })();
   },
-  releasePersons: (user_id, good_id) => {
+  releasePersons: () => {
     (async () => {
       var {
         deliver,
@@ -366,7 +366,6 @@ module.exports = {
         pictures,
         title,
         type,
-        who,
         place,
         describe,
         tel,
@@ -376,6 +375,7 @@ module.exports = {
       } = ctx.request.body;
 
       var time = new Date();
+      var now = Date.now();
 
       var good = await findPerson.create({
         good_id: good_id,
@@ -393,8 +393,8 @@ module.exports = {
         p6: pictures[5],
         p7: pictures[6],
         p8: pictures[7],
-        createdAt: time,
-        updatedAt: time,
+        createdAt: now,
+        updatedAt: now,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
@@ -406,8 +406,8 @@ module.exports = {
           wechat_num: wechat,
           qq_num: qq,
           tel_num: tel,
-          createdAt: time,
-          updatedAt: time,
+          createdAt: now,
+          updatedAt: now,
           version: 0
         });
         console.log('created: ' + JSON.stringify(personTemp));
@@ -418,20 +418,20 @@ module.exports = {
     (async () => {
       var {
         com_id,
-        com_time,
         com_detail,
         com_deliver,
         good_id,
       } = ctx.request.body;
       var time = new Date();
+      var now = Date.now();
       var good = await goodCom.create({
         com_id: com_id,
         com_detail: com_detail,
         com_deliver: com_deliver,
         com_time: time,
         good_id: good_id,
-        createdAt: time,
-        updatedAt: time,
+        createdAt: now,
+        updatedAt: now,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
@@ -441,20 +441,20 @@ module.exports = {
     (async () => {
       var {
         com_id,
-        com_time,
         com_detail,
         com_deliver,
         good_id,
       } = ctx.request.body;
       var time = new Date();
+      var now = Date.now();
       var good = await personCom.create({
         com_id: com_id,
         com_detail: com_detail,
         com_deliver: com_deliver,
         com_time: time,
         good_id: good_id,
-        createdAt: time,
-        updatedAt: time,
+        createdAt: now,
+        updatedAt: now,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
