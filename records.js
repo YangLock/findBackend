@@ -11,7 +11,7 @@ let personTemporary = model.personTemporary;
  */
 module.exports = {
   deleteRecordFromGood: (id) => {
-    (async() => {
+    (async () => {
       var find_goods = await findGood.findAll({
         where: {
           good_id: id
@@ -20,9 +20,9 @@ module.exports = {
       await find_goods.destroy();
     })();
   },
-  getuserinfor:(id)=>{
-     return (async()=>{
-      var get=await userInfor.findAll({
+  getuserinfor: (id) => {
+    return (async () => {
+      var get = await userInfor.findAll({
         where: {
           user_id: id
         }
@@ -31,9 +31,9 @@ module.exports = {
       return get;
     })();
   },
-  getuserfindgoods:(id)=>{
-    return (async()=>{
-      var get=await findGood.findAll({
+  getuserfindgoods: (id) => {
+    return (async () => {
+      var get = await findGood.findAll({
         where: {
           deliver: id
         }
@@ -41,9 +41,9 @@ module.exports = {
       return get;
     })()
   },
-  getuserfindperson:(id)=>{
-    return (async()=>{
-      var get=await findPerson.findAll({
+  getuserfindperson: (id) => {
+    return (async () => {
+      var get = await findPerson.findAll({
         where: {
           deliver: id
         }
@@ -51,8 +51,8 @@ module.exports = {
       return get;
     })()
   },
-  getmessage:(user_id)=>{
-    return (async()=>{
+  getmessage: (user_id) => {
+    return (async () => {
       var findgood = await findGood.findAll({
         where: {
           deliver: user_id
@@ -83,18 +83,18 @@ module.exports = {
         }
       });
       var com = new Array(good_comment.length + person_comment.length);
-    var i = 0;
-    for (i = 0; i < good_comment.length; i++) {
-      com[i] = good_comment[i];
-    }
-    for (i = 0; i < person_comment.length; i++) {
-      com[good_comment.length + i] = person_comment[i];
-    }
-    return com;
+      var i = 0;
+      for (i = 0; i < good_comment.length; i++) {
+        com[i] = good_comment[i];
+      }
+      for (i = 0; i < person_comment.length; i++) {
+        com[good_comment.length + i] = person_comment[i];
+      }
+      return com;
     })();
   },
   deleteRecordFromPerson: (id) => {
-    (async() => {
+    (async () => {
       var find_people = await findPerson.findAll({
         where: {
           good_id: id
@@ -104,7 +104,7 @@ module.exports = {
     })();
   },
   confirmRecordFromGood: (id) => {
-    (async() => {
+    (async () => {
       var find_goods = await findGood.findAll({
         where: {
           good_id: id
@@ -119,7 +119,7 @@ module.exports = {
     return find_goods;
   },
   confirmRecordFromPerson: (id) => {
-    (async() => {
+    (async () => {
       var find_people = await findPerson.findAll({
         where: {
           good_id: id
@@ -134,7 +134,7 @@ module.exports = {
     return find_people;
   },
   reeditRecordFromGood: (id) => {
-    (async() => {
+    (async () => {
       var find_goods = await findGood.findAll({
         where: {
           good_id: id
@@ -190,7 +190,7 @@ module.exports = {
     };
   },
   reeditRecordFromPerson: (id) => {
-    (async() => {
+    (async () => {
       var find_people = await findPerson.findAll({
         where: {
           good_id: id
@@ -246,7 +246,7 @@ module.exports = {
     };
   },
   editUserInfo: (id) => {
-    (async() => {
+    (async () => {
       var userinfo = await userInfo.findAll({
         where: {
           user_id: id
@@ -275,7 +275,7 @@ module.exports = {
     return userinfo;
   },
   refreshFromGood: (id) => {
-    (async() => {
+    (async () => {
       var find_goods = await find_goods.findAll({
         where: {
           good_id: id
@@ -289,7 +289,7 @@ module.exports = {
     return find_goods;
   },
   refreshFromPerson: (id) => {
-    (async() => {
+    (async () => {
       var find_people = await find_people.findAll({
         where: {
           good_id: id
@@ -302,9 +302,9 @@ module.exports = {
     })();
     return find_people;
   },
-  releaseGoods: (user_id) => {
-    (async() => {
-      const {
+  releaseGoods: (user_id, good_id) => {
+    (async () => {
+      var {
         deliver,
         good_id,
         pictures,
@@ -315,24 +315,12 @@ module.exports = {
         describe,
         tel,
         wechat,
-        qq
+        qq,
+        contacter
       } = ctx.request.body;
-      var find_good = await userInfor.findAll({
-        where: {
-          user_id: user_id
-        }
-      });
-      if (tel==''){
-        tel = find_good[0].tel;
-      }
-      if (qq == '') {
-        qq = find_good[0].qq;
-      }
-      if (wechat == '') {
-        wechat = find_good[0].wechat;
-      }
 
       var time = new Date();
+
       var good = await findGood.create({
         good_id: good_id,
         deliver: deliver,
@@ -349,16 +337,30 @@ module.exports = {
         p6: pictures[5],
         p7: pictures[6],
         p8: pictures[7],
-        createdAt: now,
-        updatedAt: now,
+        createdAt: time,
+        updatedAt: time,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
+
+      if (contacter || qq || tel || wechat) {
+        var goodTemp = await goodTemporary.create({
+          good_id: good_id,
+          contacter: contacter,
+          wechat_num: wechat,
+          qq_num: qq,
+          tel_num: tel,
+          createdAt: time,
+          updatedAt: time,
+          version: 0
+        });
+        console.log('created: ' + JSON.stringify(goodTemp));
+      }
     })();
   },
-  releasePersons: (user_id) => {
-    (async() => {
-      const {
+  releasePersons: (user_id, good_id) => {
+    (async () => {
+      var {
         deliver,
         good_id,
         pictures,
@@ -369,24 +371,12 @@ module.exports = {
         describe,
         tel,
         wechat,
-        qq
+        qq,
+        contacter
       } = ctx.request.body;
 
-      var find_people = await userInfor.findAll({
-        where: {
-          user_id: user_id
-        }
-      });
-      if (tel == '') {
-        tel = find_people[0].tel;
-      }
-      if (qq == '') {
-        qq = find_people[0].qq;
-      }
-      if (wechat == '') {
-        wechat = find_people[0].wechat;
-      }
       var time = new Date();
+
       var good = await findPerson.create({
         good_id: good_id,
         deliver: deliver,
@@ -403,16 +393,30 @@ module.exports = {
         p6: pictures[5],
         p7: pictures[6],
         p8: pictures[7],
-        createdAt: now,
-        updatedAt: now,
+        createdAt: time,
+        updatedAt: time,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
+
+      if (contacter || qq || tel || wechat) {
+        var personTemp = await goodTemporary.create({
+          good_id: good_id,
+          contacter: contacter,
+          wechat_num: wechat,
+          qq_num: qq,
+          tel_num: tel,
+          createdAt: time,
+          updatedAt: time,
+          version: 0
+        });
+        console.log('created: ' + JSON.stringify(personTemp));
+      }
     })();
   },
-  releasemessages: () => {
-    (async() => {
-      const {
+  releaseGoodmessages: () => {
+    (async () => {
+      var {
         com_id,
         com_time,
         com_detail,
@@ -420,29 +424,55 @@ module.exports = {
         good_id,
       } = ctx.request.body;
       var time = new Date();
-      var good = await findPerson.create({
+      var good = await goodCom.create({
         com_id: com_id,
-        deliver: deliver,
         com_detail: com_detail,
         com_deliver: com_deliver,
+        com_time: time,
         good_id: good_id,
-        createdAt: now,
-        updatedAt: now,
+        createdAt: time,
+        updatedAt: time,
+        version: 0
+      });
+      console.log('created: ' + JSON.stringify(good));
+    })();
+  },
+  releasePersonmessages: () => {
+    (async () => {
+      var {
+        com_id,
+        com_time,
+        com_detail,
+        com_deliver,
+        good_id,
+      } = ctx.request.body;
+      var time = new Date();
+      var good = await personCom.create({
+        com_id: com_id,
+        com_detail: com_detail,
+        com_deliver: com_deliver,
+        com_time: time,
+        good_id: good_id,
+        createdAt: time,
+        updatedAt: time,
         version: 0
       });
       console.log('created: ' + JSON.stringify(good));
     })();
   },
   getfindgoods: (kind) => {
-    return (async() => {
-      var goods=null;
+    (async () => {
       if (kind == "all") {
-        goods=findGood.findAll()
-        .catch(function(err) {
-          console.log(error);
-        });
+        findGood.findAll()
+          .then(function (goods) {
+            for (let good in goods) {
+              console.log(JSON.stringify(good));
+            }
+          }).catch(function (err) {
+            console.log(error);
+          });
       } else {
-        goods = await findGood.findAll({
+        var goods = await findGood.findAll({
           where: {
             typeof: kind
           }
@@ -452,19 +482,60 @@ module.exports = {
           console.log(JSON.stringify(good));
         }
       }
+      for (g in goods) {
+        var good_id = g.good_id;
+        var deliver = g.deliver;
+        var good1 = await goodTemporary.findAll({
+          where: {
+            good_id: good_id
+          }
+        });
+        var good2 = await userInfor.findAll({
+          where: {
+            deliver: deliver
+          }
+        });
+        if (good1[0].contacter == null) {
+          g.user_name = good2[0].user_name;
+        } else {
+          g.user_name = contacter;
+        }
+
+        if (good1[0].wechat_num == null) {
+          g.wechat_num = good2[0].wechat_num;
+        } else {
+          g.wechat_num = wechat_num;
+        }
+
+        if (good1[0].qq_num == null) {
+          g.qq_num = good2[0].qq_num;
+        } else {
+          g.qq_num = qq_num;
+        }
+
+        if (good1[0].tel_num == null) {
+          g.tel_num = good2[0].tel_num;
+        } else {
+          g.tel_num = tel_num;
+        }
+
+      }
       return goods;
     })();
   },
   getfindpersons: (kind) => {
-    return (async() => {
-      var goods=null;
+    (async () => {
       if (kind == "all") {
-        goods = await findPerson.findAll()
-          .catch(function(err) {
+        var goods = await findPerson.findAll()
+          .then(function (goods) {
+            for (let good in goods) {
+              console.log(JSON.stringify(good));
+            }
+          }).catch(function (err) {
             console.log(error);
           });
       } else {
-        goods = await findPerson.findAll({
+        var goods = await findPerson.findAll({
           where: {
             typeof: kind
           }
@@ -473,6 +544,45 @@ module.exports = {
         for (let good of goods) {
           console.log(JSON.stringify(good));
         }
+      }
+
+      for (g in goods) {
+        var good_id = g.good_id;
+        var deliver = g.deliver;
+        var good1 = await goodTemporary.findAll({
+          where: {
+            good_id: good_id
+          }
+        });
+        var good2 = await userInfor.findAll({
+          where: {
+            deliver: deliver
+          }
+        });
+        if (good1[0].contacter == null) {
+          g.user_name = good2[0].user_name;
+        } else {
+          g.user_name = contacter;
+        }
+
+        if (good1[0].wechat_num == null) {
+          g.wechat_num = good2[0].wechat_num;
+        } else {
+          g.wechat_num = wechat_num;
+        }
+
+        if (good1[0].qq_num == null) {
+          g.qq_num = good2[0].qq_num;
+        } else {
+          g.qq_num = qq_num;
+        }
+
+        if (good1[0].tel_num == null) {
+          g.tel_num = good2[0].tel_num;
+        } else {
+          g.tel_num = tel_num;
+        }
+
       }
       return goods;
     })();
@@ -480,13 +590,13 @@ module.exports = {
   getsearchgoods: (keyword) => {
     var string = keyword.split("");
     var arr = [];
-    (async() => {
+    (async () => {
       var goods = await findGood.findAll()
-        .then(function(goods) {
+        .then(function (goods) {
           for (let good in goods) {
             console.log(JSON.stringify(good));
           }
-        }).catch(function(err) {
+        }).catch(function (err) {
           console.log(error);
         });
       for (let good in goods) {
@@ -494,10 +604,49 @@ module.exports = {
           arr = arr.concat(good);
         }
       }
-      return arr;
+      var goods = arr;
+      for (g in goods) {
+        var good_id = g.good_id;
+        var deliver = g.deliver;
+        var good1 = await goodTemporary.findAll({
+          where: {
+            good_id: good_id
+          }
+        });
+        var good2 = await userInfor.findAll({
+          where: {
+            deliver: deliver
+          }
+        });
+        if (good1[0].contacter == null) {
+          g.user_name = good2[0].user_name;
+        } else {
+          g.user_name = contacter;
+        }
+
+        if (good1[0].wechat_num == null) {
+          g.wechat_num = good2[0].wechat_num;
+        } else {
+          g.wechat_num = wechat_num;
+        }
+
+        if (good1[0].qq_num == null) {
+          g.qq_num = good2[0].qq_num;
+        } else {
+          g.qq_num = qq_num;
+        }
+
+        if (good1[0].tel_num == null) {
+          g.tel_num = good2[0].tel_num;
+        } else {
+          g.tel_num = tel_num;
+        }
+
+      }
+      return goods;
     })();
   },
-  compare: function(string1, string2) {
+  compare: function (string1, string2) {
     var len1 = string1.length;
     var len2 = string2.length;
     for (m in string2) {
@@ -526,25 +675,65 @@ module.exports = {
           arr = arr.concat(good);
         }
       }
-      return arr;
+      var goods = arr;
+      for (g in goods) {
+        var good_id = g.good_id;
+        var deliver = g.deliver;
+        var good1 = await goodTemporary.findAll({
+          where: {
+            good_id: good_id
+          }
+        });
+        var good2 = await userInfor.findAll({
+          where: {
+            deliver: deliver
+          }
+        });
+        if (good1[0].contacter == null) {
+          g.user_name = good2[0].user_name;
+        } else {
+          g.user_name = contacter;
+        }
+
+        if (good1[0].wechat_num == null) {
+          g.wechat_num = good2[0].wechat_num;
+        } else {
+          g.wechat_num = wechat_num;
+        }
+
+        if (good1[0].qq_num == null) {
+          g.qq_num = good2[0].qq_num;
+        } else {
+          g.qq_num = qq_num;
+        }
+
+        if (good1[0].tel_num == null) {
+          g.tel_num = good2[0].tel_num;
+        } else {
+          g.tel_num = tel_num;
+        }
+
+      }
+      return goods;
     })();
   },
-  checkuser:(user_id,user_name,user_avatar)=>{
-    (async()=>{
-      var exist=await userInfor.findAll({
-        where:{
-          user_id:user_id
+
+  checkuser: (user_id, user_name, user_avatar) => {
+    (async () => {
+      var exist = await userInfor.findAll({
+        where: {
+          user_id: user_id
         }
       });
-      if (exist.length==0){
+      if (exist.length == 0) {
         var newone = await userInfor.create({
           user_id: user_id,
-          user_avatar:user_avatar,
+          user_avatar: user_avatar,
           user_name: user_name,
           wechat_num: null,
           qq_num: null,
           tel_num: null
-      })
+        })
       }
     })();
   }
