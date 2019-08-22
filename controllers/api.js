@@ -120,15 +120,15 @@ module.exports = {
     }*/
   },
   'DELETE /api/delete/findGood/:id': async (ctx, next) => {
-    console.log('delete record ${ctx.params.id}...');
+    console.log(`delete record ${ctx.params.id}...`);
     records.deleteRecordFromGood(ctx.params.id);
   },
   'DELETE /api/delete/findPerson/:id': async (ctx, next) => {
-    console.log('delete record ${ctx.params.id}...');
+    console.log(`delete record ${ctx.params.id}...`);
     records.deleteRecordFromPerson(ctx.params.id);
   },
   'PUT /api/foundConfirm/:id': async (ctx, next) => {
-    console.log('confirm record ${ctx.params.id}...');
+    console.log(`confirm record ${ctx.params.id}...`);
     var record = records.confirmRecordFromGood(ctx.params.id);
     if (record) {
       ctx.rest(record);
@@ -137,7 +137,7 @@ module.exports = {
     }
   },
   'PUT /api/claimConfirm/:id': async (ctx, next) => {
-    console.log('confirm record ${ctx.params.id}...');
+    console.log(`confirm record ${ctx.params.id}...`);
     var record = records.confirmRecordFromPerson(ctx.params.id);
     if (record) {
       ctx.rest(record);
@@ -146,7 +146,7 @@ module.exports = {
     }
   },
   'PUT /api/reEdit/findGood/:id': async (ctx, next) => {
-    console.log('reedit record ${ctx.params.id}...');
+    console.log(`reedit record ${ctx.params.id}...`);
     var record = records.reeditRecordFromGood(ctx.params.id);
     if (record[0] && record[1]) {
       ctx.rest(record);
@@ -155,7 +155,7 @@ module.exports = {
     }
   },
   'PUT /api/reEdit/findPerson/:id': async (ctx, next) => {
-    console.log('reedit record ${ctx.params.id}...');
+    console.log(`reedit record ${ctx.params.id}...`);
     var record = records.reeditRecordFromPerson(ctx.params.id);
     if (record[0] && record[1]) {
       ctx.rest(record);
@@ -164,7 +164,7 @@ module.exports = {
     }
   },
   'PUT /api/editMyInfo/:id': async (ctx, next) => {
-    console.log('edit user ${ctx.params.id} own information');
+    console.log(`edit user ${ctx.params.id} own information`);
     var record = records.editUserInfo(ctx.params.id);
     if (record) {
       ctx.rest(record);
@@ -173,7 +173,7 @@ module.exports = {
     }
   },
   'PUT /api/refresh/findGood/:id': async (ctx, next) => {
-    console.log('refresh record ${ctx.params.id}...');
+    console.log(`refresh record ${ctx.params.id}...`);
     var record = records.refreshFromGood(ctx.params.id);
     if (record) {
       ctx.rest(record);
@@ -182,7 +182,7 @@ module.exports = {
     }
   },
   'PUT /api/refresh/findPerson/:id': async (ctx, next) => {
-    console.log('refresh record ${ctx.params.id}...');
+    console.log(`refresh record ${ctx.params.id}...`);
     var record = records.reeditRecordFromPerson(ctx.params.id);
     if (record) {
       ctx.rest(record);

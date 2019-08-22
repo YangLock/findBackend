@@ -24,7 +24,12 @@ for (var url in api) {
         var path = url.substring(5);
         router.post(path, api[url]);
         console.log(`register URL mapping: POST ${path}`);
-    } else {
+    } else if(url.startsWith('DELETE')){
+        // 如果url类似"DELETE xxx":
+        var path = url.substring(7);
+        router.DELETE(path,api[url]);
+        console.log(`register URL mapping: DELETE ${path}`);
+    }else {
         // 无效的URL:
         console.log(`invalid URL: ${url}`);
     }
