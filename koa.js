@@ -3,16 +3,18 @@ const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
 const rest = require('./rest');
 const api=require('./controllers/api');
-
+const path = require('path');
+const staticFiles = require('koa-static');
 
 const app = new Koa();
-process.env.NODE_ENV = 'develop'
+process.env.NODE_ENV = 'production'
 app.use(bodyParser());
 // log request URL:
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     await next();
 });
+app.use(staticFiles(path.join(__dirname + './public/')));
 for (var url in api) {
     if (url.startsWith('GET ')) {
         // 如果url类似"GET xxx":

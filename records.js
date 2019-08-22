@@ -10,16 +10,6 @@ let personTemporary = model.personTemporary;
  * 将实现接口需要的逻辑单独写成了几个函数，在接口文件中直接调用应该就可以
  */
 module.exports = {
-  deleteRecordFromGood: (id) => {
-    (async () => {
-      var find_goods = await findGood.findAll({
-        where: {
-          good_id: id
-        }
-      });
-      await find_goods.destroy();
-    })();
-  },
   getuserinfor: (id) => {
     return (async () => {
       var get = await userInfor.findAll({
@@ -93,6 +83,16 @@ module.exports = {
       return com;
     })();
   },
+  deleteRecordFromGood: (id) => {
+    (async () => {
+      var find_goods = await findGood.findAll({
+        where: {
+          good_id: id
+        }
+      });
+      await find_goods.destroy();
+    })();
+  },
   deleteRecordFromPerson: (id) => {
     (async () => {
       var find_people = await findPerson.findAll({
@@ -147,7 +147,6 @@ module.exports = {
       });
       var now = Date.now();
       const {
-        pictures,
         title,
         type,
         who,
@@ -162,14 +161,6 @@ module.exports = {
       find_goods.detail = describe;
       find_goods.typeof = type;
       find_goods.deliver_time = new Date();
-      find_goods.p1 = pictures[0];
-      find_goods.p2 = pictures[1];
-      find_goods.p3 = pictures[2];
-      find_goods.p4 = pictures[3];
-      find_goods.p5 = pictures[4];
-      find_goods.p6 = pictures[5];
-      find_goods.p7 = pictures[6];
-      find_goods.p8 = pictures[7];
       find_goods.createdAt = now;
       find_goods.updatedAt = now;
       find_goods.version++;
@@ -203,7 +194,6 @@ module.exports = {
       });
       var now = Date.now();
       const {
-        pictures,
         title,
         type,
         who,
@@ -218,14 +208,6 @@ module.exports = {
       find_people.detail = describe;
       find_people.typeof = type;
       find_people.deliver_time = new Date();
-      find_people.p1 = pictures[0];
-      find_people.p2 = pictures[1];
-      find_people.p3 = pictures[2];
-      find_people.p4 = pictures[3];
-      find_people.p5 = pictures[4];
-      find_people.p6 = pictures[5];
-      find_people.p7 = pictures[6];
-      find_people.p8 = pictures[7];
       find_people.createdAt = now;
       find_people.updatedAt = now;
       find_people.version++;
@@ -247,21 +229,19 @@ module.exports = {
   },
   editUserInfo: (id) => {
     (async () => {
-      var userinfo = await userInfo.findAll({
+      var userinfo = await userInfor.findAll({
         where: {
           user_id: id
         }
       });
       var now = Date.now();
       const {
-        avatar,
         userID,
         userName,
         wechat,
         tel,
         qq
       } = ctx.request.body;
-      userinfo.user_avatar = avatar;
       userinfo.user_id = userID;
       userinfo.user_name = userName;
       userinfo.wechat_num = wechat;
