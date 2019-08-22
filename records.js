@@ -627,8 +627,8 @@ module.exports = {
     })();
   },
   compare: function (string1, string2) {
-    var len1 = string1.length;
-    var len2 = string2.length;
+    //var len1 = string1.length;
+    //var len2 = string2.length;
     for (m in string2) {
       for (n in string1) {
         if (m == n) {
