@@ -1,0 +1,21 @@
+{
+    "name": "SCUT-findStuff",
+    "version": "0.0.1",
+    "description": "A very simple wechat miniprogram",
+    "license": "MIT",
+    "author": "XYW",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YangLock/SCUT-findStuff"
+    },
+    "dependencies": {
+        "koa": "2.0.0",
+        "koa-bodyparser": "3.2.0",
+        "koa-router": "7.0.0",
+        "koa-static": "5.0.0",
+        "multer": "^1.4.2",
+        "mysql": "2.11.1",
+        "sequelize": "3.24.1",
+        "path": "0.12.7"
+    }
+}
