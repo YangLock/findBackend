@@ -18,24 +18,24 @@ app.use(staticFiles(path.join(__dirname + './public/')));
 for (var url in api) {
     if (url.startsWith('GET ')) {
         // 如果url类似"GET xxx":
-        var path = url.substring(4);
-        router.get(path, api[url]);
-        console.log(`register URL mapping: GET ${path}`);
+        var Path = url.substring(4);
+        router.get(Path, api[url]);
+        console.log(`register URL mapping: GET ${Path}`);
     } else if (url.startsWith('POST ')) {
         // 如果url类似"POST xxx":
-        var path = url.substring(5);
-        router.post(path, api[url]);
-        console.log(`register URL mapping: POST ${path}`);
+        var Path = url.substring(5);
+        router.post(Path, api[url]);
+        console.log(`register URL mapping: POST ${Path}`);
     } else if(url.startsWith('DELETE')){
         // 如果url类似"DELETE xxx":
-        var path = url.substring(7);
-        router.DELETE(path, api[url]);
-        console.log(`register URL mapping: DELETE ${path}`);
+        var Path = url.substring(7);
+        router.delete(Path, api[url]);
+        console.log(`register URL mapping: DELETE ${Path}`);
     } else if(url.startsWith('PUT')){
         // 如果url类似"PUT xxx":
-        var path = url.substring(4);
-        router.PUT(path, api[url]);
-        console.log(`register URL mapping: PUT ${path}`);
+        var Path = url.substring(4);
+        router.put(Path, api[url]);
+        console.log(`register URL mapping: PUT ${Path}`);
     } else {
         // 无效的URL:
         console.log(`invalid URL: ${url}`);
