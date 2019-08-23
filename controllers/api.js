@@ -51,7 +51,7 @@ module.exports = {
   },
   'GET /getuserfindperson/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var found = await records.getuserfindperson;
+    var found = await records.getuserfindperson(user_id);
     //console.log(`find ${found.length} user:`);
     for (let p of found) {
       console.log(JSON.stringify(p));
