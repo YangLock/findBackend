@@ -147,6 +147,7 @@ module.exports = {
       });
       var now = Date.now();
       const {
+        pictures,
         title,
         type,
         who,
@@ -161,6 +162,14 @@ module.exports = {
       find_goods.detail = describe;
       find_goods.typeof = type;
       find_goods.deliver_time = new Date();
+      find_goods.p1 = pictures[0];
+      find_goods.p2 = pictures[1];
+      find_goods.p3 = pictures[2];
+      find_goods.p4 = pictures[3];
+      find_goods.p5 = pictures[4];
+      find_goods.p6 = pictures[5];
+      find_goods.p7 = pictures[6];
+      find_goods.p8 = pictures[7];
       find_goods.createdAt = now;
       find_goods.updatedAt = now;
       find_goods.version++;
@@ -194,6 +203,7 @@ module.exports = {
       });
       var now = Date.now();
       const {
+        pictures,
         title,
         type,
         who,
@@ -208,6 +218,14 @@ module.exports = {
       find_people.detail = describe;
       find_people.typeof = type;
       find_people.deliver_time = new Date();
+      find_people.p1 = pictures[0];
+      find_people.p2 = pictures[1];
+      find_people.p3 = pictures[2];
+      find_people.p4 = pictures[3];
+      find_people.p5 = pictures[4];
+      find_people.p6 = pictures[5];
+      find_people.p7 = pictures[6];
+      find_people.p8 = pictures[7];
       find_people.createdAt = now;
       find_people.updatedAt = now;
       find_people.version++;
@@ -237,12 +255,14 @@ module.exports = {
       var now = Date.now();
       const {
         userID,
+        userAvatar,
         userName,
         wechat,
         tel,
         qq
       } = ctx.request.body;
       userinfo.user_id = userID;
+      userinfo.user_avatar = userAvatar;
       userinfo.user_name = userName;
       userinfo.wechat_num = wechat;
       userinfo.tel_num = tel;
