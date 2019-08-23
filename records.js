@@ -443,7 +443,11 @@ module.exports = {
   getfindgoods: (kind) => {
     (async () => {
       if (kind == "all") {
-        findGood.findAll()
+       var goods= await findGood.findAll({
+        where: {
+          stateof:"未找回"
+        }
+       })
           .then(function (goods) {
             for (let good in goods) {
               console.log(JSON.stringify(good));
@@ -454,7 +458,8 @@ module.exports = {
       } else {
         var goods = await findGood.findAll({
           where: {
-            typeof: kind
+            typeof: kind,
+            stateof:"未找回"
           }
         });
         console.log(`find ${goods.length} goods:`);
@@ -506,7 +511,11 @@ module.exports = {
   getfindpersons: (kind) => {
     (async () => {
       if (kind == "all") {
-        var goods = await findPerson.findAll()
+        var goods = await findPerson.findAll({
+          where: {
+            stateof:"未找回"
+          }
+        })
           .then(function (goods) {
             for (let good in goods) {
               console.log(JSON.stringify(good));
@@ -517,7 +526,8 @@ module.exports = {
       } else {
         var goods = await findPerson.findAll({
           where: {
-            typeof: kind
+            typeof: kind,
+            stateof:"未找回"
           }
         });
         console.log(`find ${goods.length} goods:`);
@@ -571,7 +581,11 @@ module.exports = {
     var string = keyword.split("");
     var arr = [];
     (async () => {
-      var goods = await findGood.findAll()
+      var goods = await findGood.findAll({
+        where: {
+          stateof:"未找回"
+        }
+      })
         .then(function (goods) {
           for (let good in goods) {
             console.log(JSON.stringify(good));
@@ -642,7 +656,11 @@ module.exports = {
     var string = keyword.split("");
     var arr = [];
     (async () => {
-      var goods = await findPerson.findAll()
+      var goods = await findPerson.findAll({
+        where: {
+          stateof:"未找回"
+        }
+      })
         .then(function (goods) {
           for (let good in goods) {
             console.log(JSON.stringify(good));
