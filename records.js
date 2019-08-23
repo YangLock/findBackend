@@ -111,7 +111,7 @@ module.exports = {
         }
       });
       var now = Date.now();
-      find_goods.stateof = 'found';
+      find_goods.stateof = 'true';
       find_goods.updatedAt = now;
       find_goods.version++;
       await find_goods.save();
@@ -126,7 +126,7 @@ module.exports = {
         }
       });
       var now = Date.now();
-      find_people.stateof = 'claimed';
+      find_people.stateof = 'true';
       find_people.updatedAt = now;
       find_people.version++;
       await find_people.save();
@@ -445,7 +445,7 @@ module.exports = {
       if (kind == "all") {
        var goods= await findGood.findAll({
         where: {
-          stateof:"未找回"
+          stateof:"false"
         }
        })
           .then(function (goods) {
@@ -459,7 +459,7 @@ module.exports = {
         var goods = await findGood.findAll({
           where: {
             typeof: kind,
-            stateof:"未找回"
+            stateof:"false"
           }
         });
         console.log(`find ${goods.length} goods:`);
@@ -513,7 +513,7 @@ module.exports = {
       if (kind == "all") {
         var goods = await findPerson.findAll({
           where: {
-            stateof:"未找回"
+            stateof:"false"
           }
         })
           .then(function (goods) {
@@ -527,7 +527,7 @@ module.exports = {
         var goods = await findPerson.findAll({
           where: {
             typeof: kind,
-            stateof:"未找回"
+            stateof:"false"
           }
         });
         console.log(`find ${goods.length} goods:`);
@@ -583,7 +583,7 @@ module.exports = {
     (async () => {
       var goods = await findGood.findAll({
         where: {
-          stateof:"未找回"
+          stateof:"false"
         }
       })
         .then(function (goods) {
@@ -658,7 +658,7 @@ module.exports = {
     (async () => {
       var goods = await findPerson.findAll({
         where: {
-          stateof:"未找回"
+          stateof:"false"
         }
       })
         .then(function (goods) {
