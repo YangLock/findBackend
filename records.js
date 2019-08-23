@@ -9,6 +9,18 @@ let personTemporary = model.personTemporary;
 /**
  * 将实现接口需要的逻辑单独写成了几个函数，在接口文件中直接调用应该就可以
  */
+var compare=function(string1, string2) {
+  var len1 = string1.length;
+  var len2 = string2.length;
+  for (m of string2) {
+    for (n of string1) {
+      if (m == n) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 module.exports = {
   getuserinfor: (id) => {
     return (async () => {
@@ -303,115 +315,65 @@ module.exports = {
     return find_people;
   },
   releaseGoods: () => {
-    (async () => {
-      var {
-        deliver,
-        good_id,
-        pictures,
-        title,
-        type,
-        place,
-        describe,
-        tel,
-        wechat,
-        qq,
-        contacter
-      } = ctx.request.body;
-
-      var time = new Date();
-      var now = Date.now();
-
-      var good = await findGood.create({
-        good_id: good_id,
-        deliver: deliver,
-        good_title: title,
-        find_place: place,
-        detail: describe,
-        typeof: type,
-        deliver_time: time,
-        p1: pictures[0],
-        p2: pictures[1],
-        p3: pictures[2],
-        p4: pictures[3],
-        p5: pictures[4],
-        p6: pictures[5],
-        p7: pictures[6],
-        p8: pictures[7],
-        createdAt: now,
-        updatedAt: now,
-        version: 0
+    (async() => {
+      var good1 = await findGood.create({
+        good_id: good.good_id,
+        deliver: good.deliver,
+        good_title: good.title, 
+        lost_place: good.place,
+        detail: good.describe,
+        typeof: good.type,
+        stateof:false,
+        deliver_time: good.time,
+        p1: good.pictures[0].path_server,
+        p2: good.pictures[1].path_server,
+        p3: good.pictures[2].path_server,
+        p4: good.pictures[3].path_server,
+        p5: good.pictures[4].path_server,
+        p6: good.pictures[5].path_server,
+        p7: good.pictures[6].path_server,
+        p8: good.pictures[7].path_server
       });
-      console.log('created: ' + JSON.stringify(good));
-
-      if (contacter || qq || tel || wechat) {
-        var goodTemp = await goodTemporary.create({
-          good_id: good_id,
-          contacter: contacter,
-          wechat_num: wechat,
-          qq_num: qq,
-          tel_num: tel,
-          createdAt: now,
-          updatedAt: now,
-          version: 0
-        });
-        console.log('created: ' + JSON.stringify(goodTemp));
-      }
+      console.log('created: ' + JSON.stringify(good1));
+      var good2=await goodTemporary.create({
+      good_id: good.good_id,
+      contacter: good.who,
+      wechat_num: good.wechat,
+      qq_num:  good.qq,
+      tel_num: good.tel,
+      })
+      console.log('created: ' + JSON.stringify(good2));
     })();
   },
   releasePersons: () => {
-    (async () => {
-      var {
-        deliver,
-        good_id,
-        pictures,
-        title,
-        type,
-        place,
-        describe,
-        tel,
-        wechat,
-        qq,
-        contacter
-      } = ctx.request.body;
-
-      var time = new Date();
-      var now = Date.now();
-
-      var good = await findPerson.create({
-        good_id: good_id,
-        deliver: deliver,
-        good_title: title,
-        find_place: place,
-        detail: describe,
-        typeof: type,
-        deliver_time: time,
-        p1: pictures[0],
-        p2: pictures[1],
-        p3: pictures[2],
-        p4: pictures[3],
-        p5: pictures[4],
-        p6: pictures[5],
-        p7: pictures[6],
-        p8: pictures[7],
-        createdAt: now,
-        updatedAt: now,
-        version: 0
+    (async() => {
+      var good1 = await findPerson.create({
+        good_id: good.good_id,
+        deliver: good.deliver,
+        good_title: good.title, 
+        find_place: good.place,
+        detail: good.describe,
+        typeof: good.type,
+        stateof:false,
+        deliver_time: good.time,
+        p1: good.pictures[0].path_server,
+        p2: good.pictures[1].path_server,
+        p3: good.pictures[2].path_server,
+        p4: good.pictures[3].path_server,
+        p5: good.pictures[4].path_server,
+        p6: good.pictures[5].path_server,
+        p7: good.pictures[6].path_server,
+        p8: good.pictures[7].path_server
       });
-      console.log('created: ' + JSON.stringify(good));
-
-      if (contacter || qq || tel || wechat) {
-        var personTemp = await goodTemporary.create({
-          good_id: good_id,
-          contacter: contacter,
-          wechat_num: wechat,
-          qq_num: qq,
-          tel_num: tel,
-          createdAt: now,
-          updatedAt: now,
-          version: 0
-        });
-        console.log('created: ' + JSON.stringify(personTemp));
-      }
+      console.log('created: ' + JSON.stringify(good1));
+      var good2=await personTemporary.create({
+      good_id: good.good_id,
+      contacter: good.who,
+      wechat_num: good.wechat,
+      qq_num:  good.qq,
+      tel_num: good.tel,
+      })
+      console.log('created: ' + JSON.stringify(good2));
     })();
   },
   releaseGoodmessages: () => {
@@ -461,138 +423,55 @@ module.exports = {
     })();
   },
   getfindgoods: (kind) => {
-    (async () => {
+    return (async() => {
+      var goods=null;
       if (kind == "all") {
-       var goods= await findGood.findAll({
-        where: {
-          stateof:"false"
-        }
-       })
-          .then(function (goods) {
-            for (let good in goods) {
-              console.log(JSON.stringify(good));
-            }
-          }).catch(function (err) {
-            console.log(error);
-          });
+        goods=await findGood.findAll({
+          where:{
+            stateof:false
+          }
+        })
+        .catch(function(err) {
+          console.log(error);
+        });
       } else {
-        var goods = await findGood.findAll({
+        goods = await findGood.findAll({
           where: {
             typeof: kind,
-            stateof:"false"
+            stateof:false
           }
         });
         console.log(`find ${goods.length} goods:`);
         for (let good of goods) {
           console.log(JSON.stringify(good));
         }
-      }
-      for (g in goods) {
-        var good_id = g.good_id;
-        var deliver = g.deliver;
-        var good1 = await goodTemporary.findAll({
-          where: {
-            good_id: good_id
-          }
-        });
-        var good2 = await userInfor.findAll({
-          where: {
-            deliver: deliver
-          }
-        });
-        if (good1[0].contacter == null) {
-          g.user_name = good2[0].user_name;
-        } else {
-          g.user_name = contacter;
-        }
-
-        if (good1[0].wechat_num == null) {
-          g.wechat_num = good2[0].wechat_num;
-        } else {
-          g.wechat_num = wechat_num;
-        }
-
-        if (good1[0].qq_num == null) {
-          g.qq_num = good2[0].qq_num;
-        } else {
-          g.qq_num = qq_num;
-        }
-
-        if (good1[0].tel_num == null) {
-          g.tel_num = good2[0].tel_num;
-        } else {
-          g.tel_num = tel_num;
-        }
-
       }
       return goods;
     })();
   },
   getfindpersons: (kind) => {
-    (async () => {
+    return (async() => {
+      var goods=null;
       if (kind == "all") {
-        var goods = await findPerson.findAll({
-          where: {
-            stateof:"false"
+        goods=await findPerson.findAll({
+          where:{
+            stateof:false
           }
         })
-          .then(function (goods) {
-            for (let good in goods) {
-              console.log(JSON.stringify(good));
-            }
-          }).catch(function (err) {
-            console.log(error);
-          });
+        .catch(function(err) {
+          console.log(error);
+        });
       } else {
-        var goods = await findPerson.findAll({
+        goods = await findPerson.findAll({
           where: {
             typeof: kind,
-            stateof:"false"
+            stateof:false
           }
         });
         console.log(`find ${goods.length} goods:`);
         for (let good of goods) {
           console.log(JSON.stringify(good));
         }
-      }
-
-      for (g in goods) {
-        var good_id = g.good_id;
-        var deliver = g.deliver;
-        var good1 = await goodTemporary.findAll({
-          where: {
-            good_id: good_id
-          }
-        });
-        var good2 = await userInfor.findAll({
-          where: {
-            deliver: deliver
-          }
-        });
-        if (good1[0].contacter == null) {
-          g.user_name = good2[0].user_name;
-        } else {
-          g.user_name = contacter;
-        }
-
-        if (good1[0].wechat_num == null) {
-          g.wechat_num = good2[0].wechat_num;
-        } else {
-          g.wechat_num = wechat_num;
-        }
-
-        if (good1[0].qq_num == null) {
-          g.qq_num = good2[0].qq_num;
-        } else {
-          g.qq_num = qq_num;
-        }
-
-        if (good1[0].tel_num == null) {
-          g.tel_num = good2[0].tel_num;
-        } else {
-          g.tel_num = tel_num;
-        }
-
       }
       return goods;
     })();
@@ -600,142 +479,50 @@ module.exports = {
   getsearchgoods: (keyword) => {
     var string = keyword.split("");
     var arr = [];
-    (async () => {
-      var goods = await findGood.findAll({
-        where: {
-          stateof:"false"
-        }
-      })
-        .then(function (goods) {
-          for (let good in goods) {
-            console.log(JSON.stringify(good));
-          }
-        }).catch(function (err) {
-          console.log(error);
-        });
-      for (let good in goods) {
-        if (compare(string, good.title.split(""))) {
+    console.log(string);
+    return (async() => {
+      var goods = await findGood.findAll()
+      .catch(function(err) {
+        console.log(error);
+      });
+      for (let good of goods) {
+        var string2=good.good_title.split("");
+        if (compare(string,string2)) {
           arr = arr.concat(good);
         }
       }
-      var goods = arr;
-      for (g in goods) {
-        var good_id = g.good_id;
-        var deliver = g.deliver;
-        var good1 = await goodTemporary.findAll({
-          where: {
-            good_id: good_id
-          }
-        });
-        var good2 = await userInfor.findAll({
-          where: {
-            deliver: deliver
-          }
-        });
-        if (good1[0].contacter == null) {
-          g.user_name = good2[0].user_name;
-        } else {
-          g.user_name = contacter;
-        }
-
-        if (good1[0].wechat_num == null) {
-          g.wechat_num = good2[0].wechat_num;
-        } else {
-          g.wechat_num = wechat_num;
-        }
-
-        if (good1[0].qq_num == null) {
-          g.qq_num = good2[0].qq_num;
-        } else {
-          g.qq_num = qq_num;
-        }
-
-        if (good1[0].tel_num == null) {
-          g.tel_num = good2[0].tel_num;
-        } else {
-          g.tel_num = tel_num;
-        }
-
-      }
-      return goods;
+      return arr;
     })();
   },
-  compare: function (string1, string2) {
-    //var len1 = string1.length;
-    //var len2 = string2.length;
-    for (m in string2) {
-      for (n in string1) {
-        if (m == n) {
-          return true;
-        }
-      }
-    }
-    return false;
-  },
+  compare: compare,
   getsearchpersons: (keyword) => {
     var string = keyword.split("");
     var arr = [];
-    (async () => {
-      var goods = await findPerson.findAll({
-        where: {
-          stateof:"false"
-        }
-      })
-        .then(function (goods) {
-          for (let good in goods) {
-            console.log(JSON.stringify(good));
-          }
-        }).catch(function (err) {
-          console.log(error);
-        });
-      for (let good in goods) {
-        if (compare(string, good.title.split(""))) {
+    console.log(string);
+    return (async() => {
+      var goods = await findPerson.findAll()
+      .catch(function(err) {
+        console.log(error);
+      });
+      for (let good of goods) {
+        var string2=good.good_title.split("");
+        if (compare(string,string2)) {
           arr = arr.concat(good);
         }
       }
-      var goods = arr;
-      for (g in goods) {
-        var good_id = g.good_id;
-        var deliver = g.deliver;
-        var good1 = await goodTemporary.findAll({
-          where: {
-            good_id: good_id
-          }
-        });
-        var good2 = await userInfor.findAll({
-          where: {
-            deliver: deliver
-          }
-        });
-        if (good1[0].contacter == null) {
-          g.user_name = good2[0].user_name;
-        } else {
-          g.user_name = contacter;
-        }
-
-        if (good1[0].wechat_num == null) {
-          g.wechat_num = good2[0].wechat_num;
-        } else {
-          g.wechat_num = wechat_num;
-        }
-
-        if (good1[0].qq_num == null) {
-          g.qq_num = good2[0].qq_num;
-        } else {
-          g.qq_num = qq_num;
-        }
-
-        if (good1[0].tel_num == null) {
-          g.tel_num = good2[0].tel_num;
-        } else {
-          g.tel_num = tel_num;
-        }
-
-      }
-      return goods;
+      return arr;
     })();
   },
-
+  getonegood:(good_id)=>{
+    return (async()=>{
+      var good=await findGood.findAll({
+        where:{
+          good_id:good_id
+        }
+      });
+      return good;
+    })();
+  },
   checkuser: (user_id, user_name, user_avatar) => {
     (async () => {
       var exist = await userInfor.findAll({
