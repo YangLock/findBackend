@@ -10,16 +10,16 @@ const fs = require('fs');
 var config = null;
 
 if (process.env.NODE_ENV === 'test') {
-    console.log('Load ${testConfig}...');
+    console.log(`Load ${testConfig}...`);
     config = require(testConfig);
 } else {
     if(process.env.NODE_ENV === 'develop'){
-        console.log('Load ${developConfig}...');
+        console.log(`Load ${developConfig}...`);
         config = require(developConfig);
     }
     else{
         if(process.env.NODE_ENV === 'production'){
-            console.log('Load ${productionConfig}...');
+            console.log(`Load ${productionConfig}...`);
             config = require(productionConfig);
         }
     }

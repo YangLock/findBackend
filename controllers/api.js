@@ -87,7 +87,7 @@ module.exports = {
   },
   'PUT /api/reEdit/findGood/:id': async(ctx, next) => {
     console.log(`reedit record ${ctx.params.id}...`);
-    var record = records.reeditRecordFromGood(ctx.params.id);
+    var record = records.reeditRecordFromGood(ctx.params.id,ctx);
     if (record[0] && record[1]) {
       ctx.rest(record);
     } else {
@@ -96,7 +96,7 @@ module.exports = {
   },
   'PUT /api/reEdit/findPerson/:id': async(ctx, next) => {
     console.log(`reedit record ${ctx.params.id}...`);
-    var record = records.reeditRecordFromPerson(ctx.params.id);
+    var record = records.reeditRecordFromPerson(ctx.params.id,ctx);
     if (record[0] && record[1]) {
       ctx.rest(record);
     } else {
@@ -105,7 +105,7 @@ module.exports = {
   },
   'PUT /api/editMyInfo/:id': async(ctx, next) => {
     console.log(`edit user ${ctx.params.id} own information`);
-    var record = records.editUserInfo(ctx.params.id);
+    var record = records.editUserInfo(ctx.params.id,ctx);
     if (record) {
       ctx.rest(record);
     } else {
@@ -148,12 +148,12 @@ module.exports = {
   },
   'POST /api/release/goodCom': async(ctx, next) => {
     console.log('release a message');
-    records.releasemessages();
+    records.releasemessages(ctx);
     // 检验机制先不写
   },
   'POST /api/release/personCom': async (ctx, next) => {
     console.log('release a message p');
-    records.releasePersonmessages();
+    records.releasePersonmessages(ctx);
     // 检验机制先不写
     },
   'GET /api/get/findGood/:kind': async(ctx, next) => {

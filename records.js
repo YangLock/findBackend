@@ -145,7 +145,7 @@ module.exports = {
     })();
     return find_people;
   },
-  reeditRecordFromGood: (id) => {
+  reeditRecordFromGood: (id,ctx) => {
     (async () => {
       var find_goods = await findGood.findAll({
         where: {
@@ -201,7 +201,7 @@ module.exports = {
       good_temporary
     };
   },
-  reeditRecordFromPerson: (id) => {
+  reeditRecordFromPerson: (id,ctx) => {
     (async () => {
       var find_people = await findPerson.findAll({
         where: {
@@ -257,7 +257,7 @@ module.exports = {
       person_temporary
     };
   },
-  editUserInfo: (id) => {
+  editUserInfo: (id,ctx) => {
     (async () => {
       var userinfo = await userInfor.findAll({
         where: {
@@ -377,7 +377,7 @@ module.exports = {
       console.log('created: ' + JSON.stringify(good2));
     })();
   },
-  releaseGoodmessages: () => {
+  releaseGoodmessages: (ctx) => {
     (async () => {
       var {
         com_id,
@@ -400,7 +400,7 @@ module.exports = {
       console.log('created: ' + JSON.stringify(good));
     })();
   },
-  releasePersonmessages: () => {
+  releasePersonmessages: (ctx) => {
     (async () => {
       var {
         com_id,

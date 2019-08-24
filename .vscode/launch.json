@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run hello.js",
+            "name": "Run koa.js",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/koa.js",

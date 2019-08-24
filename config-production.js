@@ -6,7 +6,7 @@ var config = {
     database: 'train',
     username: 'root',
     password: 'xieyangwu',
-    host: '49.235.25.134',
+    host: 'localhost',
     port: 3306
 };
 
