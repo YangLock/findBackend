@@ -18,28 +18,10 @@
  */
 const APIError = require('../rest').APIError;
 const records = require('../records');
-const multer=require('multer');
 var querystring = require('querystring');
-var storage = multer.diskStorage({
-  //文件保存路径
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-  //修改文件名称
-  filename: function (req, file, cb) {
-    var fileFormat = (file.originalname).split(".");
-    cb(null,Date.now() + "." + fileFormat[fileFormat.length - 1]);
-  }
-})
-//加载配置
-var upload = multer({ storage: storage });
+
 
 module.exports = {
-  'POST /upload': function(){upload.single('file'); async (ctx, next) => {
-    ctx.body = {
-      filename: ctx.req.file.filename//返回文件名
-    }
-  }},
   'GET /getuserfindgoods/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
     var found = await records.getuserfindgoods(user_id);
@@ -51,7 +33,7 @@ module.exports = {
   },
   'GET /getuserfindperson/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
-    var found = await records.getuserfindperson;
+    var found = await records.getuserfindperson(user_id);
     //console.log(`find ${found.length} user:`);
     for (let p of found) {
       console.log(JSON.stringify(p));
@@ -154,6 +136,7 @@ module.exports = {
     // 检验机制先不写
   },
   'POST /api/release/findGood': async(ctx, next) => {
+    var good=ctx.request.body;
     console.log('release a good(lost)');
     records.releaseGoods();
     // 检验机制先不写
