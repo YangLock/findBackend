@@ -500,7 +500,6 @@ module.exports = {
   getsearchgoods: (keyword) => {
     var string = keyword.split("");
     var arr = [];
-    console.log(string);
     return (async() => {
       var goods = await findGood.findAll({
           where: {
@@ -515,10 +514,13 @@ module.exports = {
         console.log(error);
       });
       for (let good of goods) {
+        console.log(good.good_title);
+        if(good.good_title!=null){
         var string2=good.good_title.split("");
         if (compare(string,string2)) {
           arr = arr.concat(good);
         }
+      }
       }
       return arr;
     })();
@@ -527,25 +529,27 @@ module.exports = {
   getsearchpersons: (keyword) => {
     var string = keyword.split("");
     var arr = [];
-    console.log(string);
     return (async() => {
       var goods = await findPerson.findAll({
-        where: {
-          stateof:false
-        },
-        order:[
-          [
-            'deliver_time', 'DESC'
-          ]
-        ]})
+          where: {
+            stateof:false
+          },
+          order:[
+            [
+              'deliver_time', 'DESC'
+            ]
+          ]})
       .catch(function(err) {
         console.log(error);
       });
       for (let good of goods) {
+        console.log(good.good_title);
+        if(good.good_title!=null){
         var string2=good.good_title.split("");
         if (compare(string,string2)) {
           arr = arr.concat(good);
         }
+      }
       }
       return arr;
     })();
@@ -602,6 +606,59 @@ module.exports = {
         //deliver: '',
         good_title: good[0].good_title,
         place: good[0].lost_place,
+        detail: good[0].detail,
+        //deliver_time: '',
+        contacter: goodcontact[0].contacter,
+        tel: goodcontact[0].tel_num,
+        wechat: goodcontact[0].wechat_num,
+        qq: goodcontact[0].qq_num,
+        imgUrls: pic}
+        return result;
+    })();
+  },
+  getoneperson:(good_id)=>{
+    return (async()=>{
+      var good=await findPerson.findAll({
+        where:{
+          good_id:good_id
+        }
+      });
+      var goodcontact=await personTemporary.findAll({
+        where:{
+        good_id:good_id
+        }
+      })
+      var pic=new Array();
+      if(good[0].p1!=null){
+        pic[0]=good[0].p1
+      };
+      if(good[0].p2!=null){
+        pic[1]=good[0].p2
+      };
+      if(good[0].p3!=null){
+        pic[2]=good[0].p3
+      };
+      if(good[0].p4!=null){
+        pic[3]=good[0].p4
+      };
+      if(good[0].p5!=null){
+        pic[4]=good[0].p5
+      };
+      if(good[0].p6!=null){
+        pic[5]=good[0].p6
+      };
+      if(good[0].p7!=null){
+        pic[6]=good[0].p7
+      };
+      if(good[0].p8!=null){
+        pic[7]=good[0].p8
+      };
+      console.log(pic);
+      var result={          
+        good_id: good[0].good_id,
+        //deliver: '',
+        good_title: good[0].good_title,
+        place: good[0].find_place,
         detail: good[0].detail,
         //deliver_time: '',
         contacter: goodcontact[0].contacter,

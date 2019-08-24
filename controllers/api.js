@@ -168,17 +168,22 @@ module.exports = {
   },
   'GET /api/get/searchGood/:keyword': async(ctx, next) => {
     var keyword = ctx.params.keyword;
-    var result = records.getsearchgoods(keyword);
+    var result = await records.getsearchgoods(keyword);
     ctx.response.body = result;
   },
   'GET /api/get/searchPerson/:keyword': async(ctx, next) => {
     var keyword = ctx.params.keyword;
-    var result = records.getsearchpersons(keyword);
+    var result = await records.getsearchpersons(keyword);
     ctx.response.body = result;
   },
   'GET /api/get/onegood/:goodid': async(ctx, next) => {
     var good_id = ctx.params.goodid;
     var result = await records.getonegood(good_id);
+    ctx.response.body = result;
+  },
+  'GET /api/get/oneperson/:goodid': async(ctx, next) => {
+    var good_id = ctx.params.goodid;
+    var result = await records.getoneperson(good_id);
     ctx.response.body = result;
   },
   'GET /api/get/checkuser':async(ctx,next)=>{
