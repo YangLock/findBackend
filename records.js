@@ -460,7 +460,10 @@ module.exports = {
           where: {
             typeof: kind,
             stateof:"false"
-          }
+          },
+          order:[
+            ['deliver_time', 'DESC']
+        ]
         });
         console.log(`find ${goods.length} goods:`);
         for (let good of goods) {
@@ -514,7 +517,10 @@ module.exports = {
         var goods = await findPerson.findAll({
           where: {
             stateof:"false"
-          }
+          },
+          order:[
+            ['deliver_time', 'DESC']
+        ]
         })
           .then(function (goods) {
             for (let good in goods) {
@@ -584,7 +590,10 @@ module.exports = {
       var goods = await findGood.findAll({
         where: {
           stateof:"false"
-        }
+        },
+        order:[
+          ['deliver_time', 'DESC']
+      ]
       })
         .then(function (goods) {
           for (let good in goods) {
@@ -659,7 +668,10 @@ module.exports = {
       var goods = await findPerson.findAll({
         where: {
           stateof:"false"
-        }
+        },
+        order:[
+          ['deliver_time', 'DESC']
+      ]
       })
         .then(function (goods) {
           for (let good in goods) {

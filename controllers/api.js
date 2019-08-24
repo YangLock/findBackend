@@ -163,6 +163,11 @@ module.exports = {
     records.releasemessages();
     // 检验机制先不写
   },
+  'POST /api/release/personCom': async (ctx, next) => {
+    console.log('release a message p');
+    records.releasePersonmessages();
+    // 检验机制先不写
+    },
   'GET /api/get/findGood/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
     var result = await records.getfindgoods(kind);
