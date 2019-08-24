@@ -65,8 +65,8 @@ for (var url in api) {
         console.log(`invalid URL: ${url}`);
     }
 }
-app.use(router.routes());
 app.use(rest.restify());
+app.use(router.routes());
 
 app.listen(3000);
 console.log('app started at port 3000');

@@ -97,7 +97,13 @@ module.exports = {
   },
   deleteRecordFromGood: (id) => {
     (async () => {
-      var find_goods = await findGood.findAll({
+      var good_tem = await goodTemporary.findOne({
+        where: {
+          good_id: id
+        }
+      });
+      await good_tem.destroy();
+      var find_goods = await findGood.findOne({
         where: {
           good_id: id
         }
@@ -107,7 +113,13 @@ module.exports = {
   },
   deleteRecordFromPerson: (id) => {
     (async () => {
-      var find_people = await findPerson.findAll({
+      var good_tem = await personTemporary.findOne({
+        where: {
+          good_id: id
+        }
+      });
+      await good_tem.destroy();
+      var find_people = await findPerson.findOne({
         where: {
           good_id: id
         }
@@ -116,34 +128,35 @@ module.exports = {
     })();
   },
   confirmRecordFromGood: (id) => {
-    (async () => {
-      var find_goods = await findGood.findAll({
-        where: {
-          good_id: id
+    return (async () => {
+      var find_goods=await findGood.findOne({
+        where:{
+          good_id:id
         }
       });
+      console.log(find_goods);
       var now = Date.now();
-      find_goods.stateof = 'true';
+      find_goods.stateof = true;
       find_goods.updatedAt = now;
       find_goods.version++;
       await find_goods.save();
+      return find_goods;
     })();
-    return find_goods;
   },
   confirmRecordFromPerson: (id) => {
-    (async () => {
-      var find_people = await findPerson.findAll({
-        where: {
-          good_id: id
+    return (async () => {
+      var find_people=await findPerson.findOne({
+        where:{
+          good_id:id
         }
       });
       var now = Date.now();
-      find_people.stateof = 'true';
+      find_people.stateof = true;
       find_people.updatedAt = now;
       find_people.version++;
       await find_people.save();
+      return find_people;
     })();
-    return find_people;
   },
   reeditRecordFromGood: (id,ctx) => {
     (async () => {
@@ -258,8 +271,8 @@ module.exports = {
     };
   },
   editUserInfo: (id,ctx) => {
-    (async () => {
-      var userinfo = await userInfor.findAll({
+    return (async () => {
+      var userinfo = await userInfor.findOne({
         where: {
           user_id: id
         }
@@ -267,28 +280,28 @@ module.exports = {
       var now = Date.now();
       const {
         userID,
-        userAvatar,
+        userAva,
         userName,
-        wechat,
-        tel,
-        qq
+        weChat,
+        telNum,
+        qqNum
       } = ctx.request.body;
       userinfo.user_id = userID;
-      userinfo.user_avatar = userAvatar;
+      userinfo.user_avatar = userAva;
       userinfo.user_name = userName;
-      userinfo.wechat_num = wechat;
-      userinfo.tel_num = tel;
-      userinfo.qq_num = qq;
-      user.createdAt = now;
-      user.updatedAt = now;
-      user.version++;
+      userinfo.wechat_num = weChat;
+      userinfo.tel_num = telNum;
+      userinfo.qq_num = qqNum;
+      userinfo.createdAt = now;
+      userinfo.updatedAt = now;
+      userinfo.version++;
       await userinfo.save();
+      return userinfo;
     })();
-    return userinfo;
   },
   refreshFromGood: (id) => {
-    (async () => {
-      var find_goods = await find_goods.findAll({
+    return (async () => {
+      var find_goods = await findGood.findOne({
         where: {
           good_id: id
         }
@@ -297,12 +310,12 @@ module.exports = {
       find_goods.deliver_time = new Date();
       find_goods.updatedAt = now;
       await find_goods.save();
+      return find_goods;
     })();
-    return find_goods;
   },
-  refreshFromPerson: (id) => {
-    (async () => {
-      var find_people = await find_people.findAll({
+  refreshFromGPerson: (id) => {
+    return (async () => {
+      var find_people = await findPerson.findOne({
         where: {
           good_id: id
         }
@@ -311,8 +324,8 @@ module.exports = {
       find_people.deliver_time = new Date();
       find_people.updatedAt = now;
       await find_people.save();
+      return find_people;
     })();
-    return find_people;
   },
   releaseGoods: (good) => {
     (async() => {

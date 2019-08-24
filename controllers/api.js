@@ -69,7 +69,7 @@ module.exports = {
   },
   'PUT /api/foundConfirm/:id': async(ctx, next) => {
     console.log(`confirm record ${ctx.params.id}...`);
-    var record = records.confirmRecordFromGood(ctx.params.id);
+    var record = await records.confirmRecordFromGood(ctx.params.id);
     if (record) {
       ctx.rest(record);
     } else {
@@ -78,7 +78,7 @@ module.exports = {
   },
   'PUT /api/claimConfirm/:id': async(ctx, next) => {
     console.log(`confirm record ${ctx.params.id}...`);
-    var record = records.confirmRecordFromPerson(ctx.params.id);
+    var record = await records.confirmRecordFromPerson(ctx.params.id);
     if (record) {
       ctx.rest(record);
     } else {
@@ -105,7 +105,7 @@ module.exports = {
   },
   'PUT /api/editMyInfo/:id': async(ctx, next) => {
     console.log(`edit user ${ctx.params.id} own information`);
-    var record = records.editUserInfo(ctx.params.id,ctx);
+    var record = await records.editUserInfo(ctx.params.id,ctx);
     if (record) {
       ctx.rest(record);
     } else {
@@ -114,7 +114,7 @@ module.exports = {
   },
   'PUT /api/refresh/findGood/:id': async(ctx, next) => {
     console.log(`refresh record ${ctx.params.id}...`);
-    var record = records.refreshFromGood(ctx.params.id);
+    var record = await records.refreshFromGood(ctx.params.id);
     if (record) {
       ctx.rest(record);
     } else {
@@ -123,7 +123,7 @@ module.exports = {
   },
   'PUT /api/refresh/findPerson/:id': async(ctx, next) => {
     console.log(`refresh record ${ctx.params.id}...`);
-    var record = records.reeditRecordFromPerson(ctx.params.id);
+    var record = await records.reeditRecordFromPerson(ctx.params.id);
     if (record) {
       ctx.rest(record);
     } else {
