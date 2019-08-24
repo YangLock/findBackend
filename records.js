@@ -423,6 +423,74 @@ module.exports = {
       console.log('created: ' + JSON.stringify(good));
     })();
   },
+
+  getgoodCom: (good_id) => {
+    return (async() => {
+      var mes=null;
+      
+        mes=await goodCom.findAll({
+          where:{
+            good_id:good_id
+          },
+          order:[
+            [
+              'deliver_time', 'DESC'
+            ]
+          ]
+        })
+        .catch(function(err) {
+          console.log(error);
+        });
+        var photo=null;
+for(let m of mes){
+   photo=await userInfor.findAll({
+    where:{
+      user_id:m.deliver
+    }
+  })
+
+m.userPhoto=photo.user_avatar;
+}
+
+     
+      return mes;
+    })();
+  },
+
+  getpersonCom: (good_id) => {
+    return (async() => {
+      var mes=null;
+      
+        mes=await personCom.findAll({
+          where:{
+            good_id:good_id
+          },
+          order:[
+            [
+              'deliver_time', 'DESC'
+            ]
+          ]
+        })
+        .catch(function(err) {
+          console.log(error);
+        });
+        var photo=null;
+for(let m of mes){
+   photo=await userInfor.findAll({
+    where:{
+      user_id:m.deliver
+    }
+  })
+
+m.userPhoto=photo.user_avatar;
+}
+     
+      return mes;
+    })();
+  },
+
+
+
   getfindgoods: (kind) => {
     return (async() => {
       var goods=null;

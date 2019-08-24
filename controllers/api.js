@@ -156,6 +156,17 @@ module.exports = {
     records.releasePersonmessages(ctx);
     // 检验机制先不写
     },
+    'GET /api/get/goodCom': async(ctx, next) => {
+      var good_id = ctx.request.body.good_id;
+      var result = await records.getgoodCom(good_id);
+      ctx.response.body = result;
+    },
+    'GET /api/get/personCom': async(ctx, next) => {
+      var good_id = ctx.request.body.good_id;
+      var result = await records.getpersonCom(good_id);
+      ctx.response.body = result;
+    },
+
   'GET /api/get/findGood/:kind': async(ctx, next) => {
     var kind = ctx.params.kind;
     var result = await records.getfindgoods(kind);
