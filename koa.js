@@ -8,7 +8,7 @@ const staticFiles = require('koa-static');
 const multer = require('koa-multer');
 
 const app = new Koa();
-process.env.NODE_ENV = 'develop'
+process.env.NODE_ENV = 'production'
 app.use(bodyParser());
 // log request URL:
 app.use(async (ctx, next) => {

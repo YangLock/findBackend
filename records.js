@@ -314,8 +314,9 @@ module.exports = {
     })();
     return find_people;
   },
-  releaseGoods: () => {
+  releaseGoods: (good) => {
     (async() => {
+      console.log(good);
       var good1 = await findGood.create({
         good_id: good.good_id,
         deliver: good.deliver,
@@ -336,7 +337,7 @@ module.exports = {
       });
       console.log('created: ' + JSON.stringify(good1));
       var good2=await goodTemporary.create({
-      good_id: good.good_id,
+        good_id: good.good_id,
       contacter: good.who,
       wechat_num: good.wechat,
       qq_num:  good.qq,
@@ -345,7 +346,7 @@ module.exports = {
       console.log('created: ' + JSON.stringify(good2));
     })();
   },
-  releasePersons: () => {
+  releasePersons: (good) => {
     (async() => {
       var good1 = await findPerson.create({
         good_id: good.good_id,
@@ -354,8 +355,8 @@ module.exports = {
         find_place: good.place,
         detail: good.describe,
         typeof: good.type,
-        stateof:false,
         deliver_time: good.time,
+        stateof:false,
         p1: good.pictures[0].path_server,
         p2: good.pictures[1].path_server,
         p3: good.pictures[2].path_server,
@@ -557,6 +558,58 @@ module.exports = {
         }
       });
       return good;
+    })();
+  },
+  getonegood:(good_id)=>{
+    return (async()=>{
+      var good=await findGood.findAll({
+        where:{
+          good_id:good_id
+        }
+      });
+      var goodcontact=await goodTemporary.findAll({
+        where:{
+        good_id:good_id
+        }
+      })
+      var pic=new Array();
+      if(good[0].p1!=null){
+        pic[0]=good[0].p1
+      };
+      if(good[0].p2!=null){
+        pic[1]=good[0].p2
+      };
+      if(good[0].p3!=null){
+        pic[2]=good[0].p3
+      };
+      if(good[0].p4!=null){
+        pic[3]=good[0].p4
+      };
+      if(good[0].p5!=null){
+        pic[4]=good[0].p5
+      };
+      if(good[0].p6!=null){
+        pic[5]=good[0].p6
+      };
+      if(good[0].p7!=null){
+        pic[6]=good[0].p7
+      };
+      if(good[0].p8!=null){
+        pic[7]=good[0].p8
+      };
+      var result={          
+        good_id: good[0].good_id,
+        //deliver: '',
+        good_title: good[0].good_title,
+        place: good[0].lost_place,
+        detail: good[0].detail,
+        //deliver_time: '',
+        contacter: goodcontact[0].contacter,
+        tel: goodcontact[0].tel_num,
+        wechat: goodcontact[0].wechat_num,
+        qq: goodcontact[0].qq_num,
+        imgUrls: pic}
+        return result;
     })();
   },
   checkuser: (user_id, user_name, user_avatar) => {

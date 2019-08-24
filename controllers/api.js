@@ -131,14 +131,19 @@ module.exports = {
     }
   },
   'POST /api/release/findPerson': async(ctx, next) => {
+    var good=ctx.request.body;
+    console.log(good);
     console.log('release a good（pick up）');
-    records.releasePersons();
+    records.releasePersons(good);
+    ctx.response.body={good_id:good.good_id};
     // 检验机制先不写
   },
   'POST /api/release/findGood': async(ctx, next) => {
     var good=ctx.request.body;
+    console.log(good);
     console.log('release a good(lost)');
-    records.releaseGoods();
+    records.releaseGoods(good);
+    ctx.response.body={good_id:good.good_id};
     // 检验机制先不写
   },
   'POST /api/release/goodCom': async(ctx, next) => {
@@ -169,6 +174,11 @@ module.exports = {
   'GET /api/get/searchPerson/:keyword': async(ctx, next) => {
     var keyword = ctx.params.keyword;
     var result = records.getsearchpersons(keyword);
+    ctx.response.body = result;
+  },
+  'GET /api/get/onegood/:goodid': async(ctx, next) => {
+    var good_id = ctx.params.goodid;
+    var result = await records.getonegood(good_id);
     ctx.response.body = result;
   },
   'GET /api/get/checkuser':async(ctx,next)=>{
