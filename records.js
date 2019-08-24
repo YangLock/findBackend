@@ -450,6 +450,7 @@ for(let m of mes){
   })
 
 m.userPhoto=photo.user_avatar;
+m.user_name=photo.user_name;
 }
 
      
@@ -483,6 +484,7 @@ for(let m of mes){
   })
 
 m.userPhoto=photo.user_avatar;
+m.user_name=photo.user_name;
 }
      
       return mes;
