@@ -51,12 +51,14 @@ module.exports = {
         });
       var result=new Array();
         console.log(`find ${goods.length} goods:`);
+        console.log(goods);
         for (let j in goods) {
           var goodcontact=await goodTemporary.findOne({
             where:{
               good_id:goods[j].good_id
             }
           })
+          console.log(goodcontact);
           result[j]={
             createdAt: goods[j].createdAt,
             deliver: goods[j].deliver,
@@ -184,13 +186,12 @@ module.exports = {
           good_id: id
         }
       });
-      await good_tem.destroy();
       var find_goods = await findGood.findOne({
         where: {
           good_id: id
         }
       });
-      await find_goods.destroy();
+      good_tem.destroy().then(find_goods.destroy());
     })();
   },
   deleteRecordFromPerson: (id) => {
@@ -200,13 +201,12 @@ module.exports = {
           good_id: id
         }
       });
-      await good_tem.destroy();
       var find_people = await findPerson.findOne({
         where: {
           good_id: id
         }
       });
-      await find_people.destroy();
+      good_tem.destroy().then(find_people.destroy());
     })();
   },
   confirmRecordFromGood: (id) => {

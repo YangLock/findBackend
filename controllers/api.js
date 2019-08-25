@@ -58,11 +58,13 @@ module.exports = {
   },
   'DELETE /api/delete/findGood/:id': async(ctx, next) => {
     console.log(`delete record ${ctx.params.id}...`);
-    records.deleteRecordFromGood(ctx.params.id);
+    await records.deleteRecordFromGood(ctx.params.id);
+    ctx.response.body="ok"
   },
   'DELETE /api/delete/findPerson/:id': async(ctx, next) => {
     console.log(`delete record ${ctx.params.id}...`);
     records.deleteRecordFromPerson(ctx.params.id);
+    ctx.response.body="ok"
   },
   'PUT /api/foundConfirm/:id': async(ctx, next) => {
     console.log(`confirm record ${ctx.params.id}...`);
