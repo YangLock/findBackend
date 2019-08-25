@@ -44,9 +44,6 @@ module.exports = {
     var user_id = ctx.params.user_id;
     var get=await records.getuserinfor(user_id);
     //console.log(`find ${get.length} user:`);
-    for (let p of get) {
-      console.log(JSON.stringify(p));
-    }
     //console.log(get);
     ctx.response.body = get;
   },

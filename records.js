@@ -24,7 +24,7 @@ var compare=function(string1, string2) {
 module.exports = {
   getuserinfor: (id) => {
     return (async () => {
-      var get = await userInfor.findAll({
+      var get = await userInfor.findOne({
         where: {
           user_id: id
         }
