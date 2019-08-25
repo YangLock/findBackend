@@ -34,24 +34,106 @@ module.exports = {
     })();
   },
   getuserfindgoods: (id) => {
-    return (async () => {
-      var get = await findGood.findAll({
-        where: {
-          deliver: id
+    return (async() => {
+      var goods=null;
+        goods=await findGood.findAll({
+          where:{
+            deliver:id
+          },
+          order:[
+            [
+              'deliver_time', 'DESC'
+            ]
+          ]
+        })
+        .catch(function(err) {
+          console.log(error);
+        });
+      var result=new Array();
+        console.log(`find ${goods.length} goods:`);
+        for (let j in goods) {
+          var goodcontact=await goodTemporary.findOne({
+            where:{
+              good_id:goods[j].good_id
+            }
+          })
+          result[j]={
+            createdAt: goods[j].createdAt,
+            deliver: goods[j].deliver,
+            deliver_time: goods[j].deliver_time,
+            detail: goods[j].detail,
+            good_id: goods[j].good_id,
+            good_title: goods[j].good_title,
+            lost_place: goods[j].lost_place,
+            p1: goods[j].p1,
+            p2: goods[j].p2,
+            p3: goods[j].p3,
+            p4: goods[j].p4,
+            p5: goods[j].p5,
+            p6: goods[j].p6,
+            p7: goods[j].p7,
+            p8: goods[j].p8,
+            stateof: goods[j].stateof,
+            typeof: goods[j].typeof,
+            updatedAt: goods[j].updatedAt,
+            version: goods[j].version,
+            contacter:goodcontact.contacter
+          }
         }
-      });
-      return get;
-    })()
+        console.log(result)
+      return result;
+    })();
   },
   getuserfindperson: (id) => {
-    return (async () => {
-      var get = await findPerson.findAll({
-        where: {
-          deliver: id
+    return (async() => {
+      var goods=null;
+        goods=await findPerson.findAll({
+          where:{
+            deliver:id
+          },
+          order:[
+            [
+              'deliver_time', 'DESC'
+            ]
+          ]
+        })
+        .catch(function(err) {
+          console.log(error);
+        });
+      var result=new Array();
+        console.log(`find ${goods.length} goods:`);
+        for (let j in goods) {
+          var goodcontact=await personTemporary.findOne({
+            where:{
+              good_id:goods[j].good_id
+            }
+          })
+          result[j]={
+            createdAt: goods[j].createdAt,
+            deliver: goods[j].deliver,
+            deliver_time: goods[j].deliver_time,
+            detail: goods[j].detail,
+            good_id: goods[j].good_id,
+            good_title: goods[j].good_title,
+            find_place: goods[j].find_place,
+            p1: goods[j].p1,
+            p2: goods[j].p2,
+            p3: goods[j].p3,
+            p4: goods[j].p4,
+            p5: goods[j].p5,
+            p6: goods[j].p6,
+            p7: goods[j].p7,
+            p8: goods[j].p8,
+            stateof: goods[j].stateof,
+            typeof: goods[j].typeof,
+            updatedAt: goods[j].updatedAt,
+            version: goods[j].version,
+            contacter:goodcontact.contacter
+          }
         }
-      });
-      return get;
-    })()
+        console.log(result)
+      return result;
+    })();
   },
   getmessage: (user_id) => {
     return (async () => {
@@ -535,12 +617,40 @@ m.user_name=photo.user_name;
             ]
           ]
         });
-        console.log(`find ${goods.length} goods:`);
-        for (let good of goods) {
-          console.log(JSON.stringify(good));
-        }
       }
-      return goods;
+      var result=new Array();
+        console.log(`find ${goods.length} goods:`);
+        for (let j in goods) {
+          var goodcontact=await goodTemporary.findOne({
+            where:{
+              good_id:goods[j].good_id
+            }
+          })
+          result[j]={
+            createdAt: goods[j].createdAt,
+            deliver: goods[j].deliver,
+            deliver_time: goods[j].deliver_time,
+            detail: goods[j].detail,
+            good_id: goods[j].good_id,
+            good_title: goods[j].good_title,
+            lost_place: goods[j].lost_place,
+            p1: goods[j].p1,
+            p2: goods[j].p2,
+            p3: goods[j].p3,
+            p4: goods[j].p4,
+            p5: goods[j].p5,
+            p6: goods[j].p6,
+            p7: goods[j].p7,
+            p8: goods[j].p8,
+            stateof: goods[j].stateof,
+            typeof: goods[j].typeof,
+            updatedAt: goods[j].updatedAt,
+            version: goods[j].version,
+            contacter:goodcontact.contacter
+          }
+        }
+        console.log(result)
+      return result;
     })();
   },
   getfindpersons: (kind) => {
@@ -572,12 +682,40 @@ m.user_name=photo.user_name;
             ]
           ]
         });
-        console.log(`find ${goods.length} goods:`);
-        for (let good of goods) {
-          console.log(JSON.stringify(good));
-        }
       }
-      return goods;
+      var result=new Array();
+        console.log(`find ${goods.length} goods:`);
+        for (let j in goods) {
+          var goodcontact=await personTemporary.findOne({
+            where:{
+              good_id:goods[j].good_id
+            }
+          })
+          result[j]={
+            createdAt: goods[j].createdAt,
+            deliver: goods[j].deliver,
+            deliver_time: goods[j].deliver_time,
+            detail: goods[j].detail,
+            good_id: goods[j].good_id,
+            good_title: goods[j].good_title,
+            find_place: goods[j].find_place,
+            p1: goods[j].p1,
+            p2: goods[j].p2,
+            p3: goods[j].p3,
+            p4: goods[j].p4,
+            p5: goods[j].p5,
+            p6: goods[j].p6,
+            p7: goods[j].p7,
+            p8: goods[j].p8,
+            stateof: goods[j].stateof,
+            typeof: goods[j].typeof,
+            updatedAt: goods[j].updatedAt,
+            version: goods[j].version,
+            contacter:goodcontact.contacter
+          }
+        }
+        console.log(result)
+      return result;
     })();
   },
   getsearchgoods: (keyword) => {

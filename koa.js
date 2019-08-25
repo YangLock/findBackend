@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'develop'
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
@@ -34,7 +34,7 @@ var storage = multer.diskStorage({
   var upload = multer({ storage: storage });
   //路由
   router.post('/upload', upload.single('file'), async (ctx, next) => {
-    var picurl='http://www.scutfind.xyz:3000/uploads/'
+    var picurl='http://localhost:3000/uploads/'
     ctx.body = {
       file: picurl+ctx.req.file.filename//返回文件名
     }
