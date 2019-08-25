@@ -427,7 +427,7 @@ module.exports = {
       return find_goods;
     })();
   },
-  refreshFromGPerson: (id) => {
+  refreshFromPerson: (id) => {
     return (async () => {
       var find_people = await findPerson.findOne({
         where: {
