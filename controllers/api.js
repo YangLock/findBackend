@@ -122,7 +122,7 @@ module.exports = {
   },
   'PUT /api/refresh/findPerson/:id': async(ctx, next) => {
     console.log(`refresh record ${ctx.params.id}...`);
-    var record = await records.reeditRecordFromPerson(ctx.params.id);
+    var record = await records.refreshFromPerson(ctx.params.id);
     if (record) {
       ctx.rest(record);
     } else {
