@@ -170,13 +170,44 @@ module.exports = {
       });
       var com = new Array(good_comment.length + person_comment.length);
       var i = 0;
+      var j=0;
       for (i = 0; i < good_comment.length; i++) {
         com[i] = good_comment[i];
       }
       for (i = 0; i < person_comment.length; i++) {
         com[good_comment.length + i] = person_comment[i];
       }
-      return com;
+      var result=new Array();
+      if(com.length!=0){
+        for(i=0;i<com.length;i++){
+          for(j=0;j<i;j++){
+            console.log(com[i].createdAt);
+            if(com[i].createdAt>com[j].createdAt){
+              var tem=com[i];
+              com[i]=com[j];
+              com[j]=tem;
+            }
+          }
+        }
+      }
+      for(let k in com){
+        var deli=await userInfor.findOne({
+          where:{
+            user_id:com[k].com_deliver
+          }
+        })
+        console.log(deli);
+          result[k]={
+          good_id:com[k].good_id,
+          com_id:com[k].com_id,
+          com_time: com[k].com_time,
+          com_detail: com[k].com_detail,
+          com_deliver: com[k].com_deliver,
+          deliver_ava:deli.user_avatar,
+          deliver_name:deli.user_name
+        }
+      }
+      return result;
     })();
   },
   deleteRecordFromGood: (id) => {
@@ -241,13 +272,13 @@ module.exports = {
     })();
   },
   reeditRecordFromGood: (id,ctx) => {
-    (async () => {
-      var find_goods = await findGood.findAll({
+    return (async () => {
+      var find_goods = await findGood.findOne({
         where: {
           good_id: id
         }
       });
-      var good_temporary = await goodTemporary.findAll({
+      var good_temporary = await goodTemporary.findOne({
         where: {
           good_id: id
         }
@@ -264,19 +295,20 @@ module.exports = {
         wechat,
         qq
       } = ctx.request.body;
+      console.log(ctx.request.body);
       find_goods.good_title = title;
-      find_goods.find_place = place;
+      find_goods.lost_place = place;
       find_goods.detail = describe;
       find_goods.typeof = type;
       find_goods.deliver_time = new Date();
-      find_goods.p1 = pictures[0];
-      find_goods.p2 = pictures[1];
-      find_goods.p3 = pictures[2];
-      find_goods.p4 = pictures[3];
-      find_goods.p5 = pictures[4];
-      find_goods.p6 = pictures[5];
-      find_goods.p7 = pictures[6];
-      find_goods.p8 = pictures[7];
+      find_goods.p1 = pictures[0].path_server;
+      find_goods.p2 = pictures[1].path_server;
+      find_goods.p3 = pictures[2].path_server;
+      find_goods.p4 = pictures[3].path_server;
+      find_goods.p5 = pictures[4].path_server;
+      find_goods.p6 = pictures[5].path_server;
+      find_goods.p7 = pictures[6].path_server;
+      find_goods.p8 = pictures[7].path_server;
       find_goods.createdAt = now;
       find_goods.updatedAt = now;
       find_goods.version++;
@@ -288,22 +320,22 @@ module.exports = {
       good_temporary.createdAt = now;
       good_temporary.updatedAt = now;
       good_temporary.version++;
-      await find_people.save();
+      await find_goods.save();
       await good_temporary.save();
+      return {
+        find_goods,
+        good_temporary
+      };
     })();
-    return {
-      find_goods,
-      good_temporary
-    };
   },
   reeditRecordFromPerson: (id,ctx) => {
-    (async () => {
-      var find_people = await findPerson.findAll({
+    return (async () => {
+      var find_people = await findPerson.findOne({
         where: {
           good_id: id
         }
       });
-      var person_temporary = await personTemporary.findAll({
+      var person_temporary = await personTemporary.findOne({
         where: {
           good_id: id
         }
@@ -325,14 +357,14 @@ module.exports = {
       find_people.detail = describe;
       find_people.typeof = type;
       find_people.deliver_time = new Date();
-      find_people.p1 = pictures[0];
-      find_people.p2 = pictures[1];
-      find_people.p3 = pictures[2];
-      find_people.p4 = pictures[3];
-      find_people.p5 = pictures[4];
-      find_people.p6 = pictures[5];
-      find_people.p7 = pictures[6];
-      find_people.p8 = pictures[7];
+      find_people.p1 = pictures[0].path_server;
+      find_people.p2 = pictures[1].path_server;
+      find_people.p3 = pictures[2].path_server;
+      find_people.p4 = pictures[3].path_server;
+      find_people.p5 = pictures[4].path_server;
+      find_people.p6 = pictures[5].path_server;
+      find_people.p7 = pictures[6].path_server;
+      find_people.p8 = pictures[7].path_server;
       find_people.createdAt = now;
       find_people.updatedAt = now;
       find_people.version++;
@@ -346,11 +378,11 @@ module.exports = {
       person_temporary.version++;
       await find_people.save();
       await person_temporary.save();
+      return {
+        find_people,
+        person_temporary
+      };
     })();
-    return {
-      find_people,
-      person_temporary
-    };
   },
   editUserInfo: (id,ctx) => {
     return (async () => {
@@ -520,70 +552,91 @@ module.exports = {
   },
 
   getgoodCom: (good_id) => {
-    return (async() => {
-      var mes=null;
-      
-        mes=await goodCom.findAll({
-          where:{
-            good_id:good_id
-          },
-          order:[
-            [
-              'deliver_time', 'DESC'
-            ]
-          ]
-        })
-        .catch(function(err) {
-          console.log(error);
-        });
-        var photo=null;
-for(let m of mes){
-   photo=await userInfor.findAll({
-    where:{
-      user_id:m.deliver
-    }
-  })
-
-m.userPhoto=photo.user_avatar;
-m.user_name=photo.user_name;
-}
-
-     
-      return mes;
-    })();
+    return (async () => {
+      var mes = [];
+      console.log('------------------sadsad-------------')
+      console.log(good_id)
+      mes = await goodCom.findAll({
+      where: {
+      good_id: good_id
+      },
+      order: [
+      [
+      'com_time', 'DESC'
+      ]
+      ]
+      })
+      .catch(function (err) {
+      console.log(err);
+      });
+      // console.log('------------------sadsad-------------')
+      // console.log(mes)
+      var photo = [];
+      let result = [];
+      for (let m of mes) {
+      let obj = m.get({ plain: true });
+      result.push(obj);
+      photo = await userInfor.findAll({
+      where: {
+      user_id: m.com_deliver
+      }
+      })
+      obj['userPhoto'] = photo[0].user_avatar;
+      obj['user_name'] = photo[0].user_name;
+      console.log('--------------------'+obj.userPhoto)
+      console.log('--------------------'+photo[0].user_name)
+      // console.log('------------------sa-------------')
+      // console.log(photo)
+      // console.log('------------------ssad-------------')
+      // console.log(m)
+      }
+      console.log(result)
+      return result;
+      })();
   },
 
   getpersonCom: (good_id) => {
-    return (async() => {
-      var mes=null;
-      
-        mes=await personCom.findAll({
-          where:{
-            good_id:good_id
-          },
-          order:[
-            [
-              'deliver_time', 'DESC'
-            ]
-          ]
-        })
-        .catch(function(err) {
-          console.log(error);
-        });
-        var photo=null;
-for(let m of mes){
-   photo=await userInfor.findAll({
-    where:{
-      user_id:m.deliver
-    }
-  })
-
-m.userPhoto=photo.user_avatar;
-m.user_name=photo.user_name;
-}
-     
-      return mes;
-    })();
+    return (async () => {
+      var mes = [];
+      console.log('------------------sadsad-------------')
+      console.log(good_id)
+      mes = await personCom.findAll({
+      where: {
+      good_id: good_id
+      },
+      order: [
+      [
+      'com_time', 'DESC'
+      ]
+      ]
+      })
+      .catch(function (err) {
+      console.log(err);
+      });
+      // console.log('------------------sadsad-------------')
+      // console.log(mes)
+      var photo = [];
+      let result = [];
+      for (let m of mes) {
+      let obj = m.get({ plain: true });
+      result.push(obj);
+      photo = await userInfor.findAll({
+      where: {
+      user_id: m.com_deliver
+      }
+      })
+      obj['userPhoto'] = photo[0].user_avatar;
+      obj['user_name'] = photo[0].user_name;
+      console.log('--------------------'+obj.userPhoto)
+      console.log('--------------------'+photo[0].user_name)
+      // console.log('------------------sa-------------')
+      // console.log(photo)
+      // console.log('------------------ssad-------------')
+      // console.log(m)
+      }
+      console.log(result)
+      return result;
+      })();
   },
 
 

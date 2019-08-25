@@ -51,9 +51,9 @@ module.exports = {
     var user_id = ctx.params.user_id;
     var com=await records.getmessage(user_id);
     // console.log(`find ${userInfor.length} user:`);
-    for (let p of com) {
-        console.log(JSON.stringify(p));
-    }
+    // for (let p of com) {
+    //     console.log(JSON.stringify(p));
+    // }
     ctx.response.body = com;
   },
   'DELETE /api/delete/findGood/:id': async(ctx, next) => {
@@ -86,8 +86,8 @@ module.exports = {
   },
   'PUT /api/reEdit/findGood/:id': async(ctx, next) => {
     console.log(`reedit record ${ctx.params.id}...`);
-    var record = records.reeditRecordFromGood(ctx.params.id,ctx);
-    if (record[0] && record[1]) {
+    var record = await records.reeditRecordFromGood(ctx.params.id,ctx);
+    if (record) {
       ctx.rest(record);
     } else {
       throw new APIError('record:not_found', 'record not found by id');
@@ -95,8 +95,8 @@ module.exports = {
   },
   'PUT /api/reEdit/findPerson/:id': async(ctx, next) => {
     console.log(`reedit record ${ctx.params.id}...`);
-    var record = records.reeditRecordFromPerson(ctx.params.id,ctx);
-    if (record[0] && record[1]) {
+    var record = await records.reeditRecordFromPerson(ctx.params.id,ctx);
+    if (record) {
       ctx.rest(record);
     } else {
       throw new APIError('record:not_found', 'record not found by id');
@@ -147,21 +147,23 @@ module.exports = {
   },
   'POST /api/release/goodCom': async(ctx, next) => {
     console.log('release a message');
-    records.releasemessages(ctx);
+    records.releaseGoodmessages(ctx);
+    ctx.response.body="success"
     // 检验机制先不写
   },
   'POST /api/release/personCom': async (ctx, next) => {
     console.log('release a message p');
     records.releasePersonmessages(ctx);
+    ctx.response.body="success"
     // 检验机制先不写
     },
     'GET /api/get/goodCom': async(ctx, next) => {
-      var good_id = ctx.request.body.good_id;
+      var good_id = ctx.query.good_id;
       var result = await records.getgoodCom(good_id);
       ctx.response.body = result;
     },
     'GET /api/get/personCom': async(ctx, next) => {
-      var good_id = ctx.request.body.good_id;
+      var good_id = ctx.query.good_id;
       var result = await records.getpersonCom(good_id);
       ctx.response.body = result;
     },

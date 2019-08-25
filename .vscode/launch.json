@@ -15,7 +15,7 @@
                 "--nolazy"
             ],
             "env": {
-                "NODE_ENV": "develop"
+                "NODE_ENV": "production"
             },
             "sourceMaps": false
         }
