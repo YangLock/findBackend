@@ -796,6 +796,36 @@ module.exports = {
         }
       }
       }
+      var result=new Array();
+      for (let j in arr) {
+        var goodcontact=await goodTemporary.findOne({
+          where:{
+            good_id:arr[j].good_id
+          }
+        })
+        result[j]={
+          createdAt: arr[j].createdAt,
+          deliver: arr[j].deliver,
+          deliver_time: arr[j].deliver_time,
+          detail: arr[j].detail,
+          good_id: arr[j].good_id,
+          good_title: arr[j].good_title,
+          lost_place: arr[j].lost_place,
+          p1: arr[j].p1,
+          p2: arr[j].p2,
+          p3: arr[j].p3,
+          p4: arr[j].p4,
+          p5: arr[j].p5,
+          p6: arr[j].p6,
+          p7: arr[j].p7,
+          p8: arr[j].p8,
+          stateof: arr[j].stateof,
+          typeof: arr[j].typeof,
+          updatedAt: arr[j].updatedAt,
+          version:arr[j].version,
+          contacter:goodcontact.contacter
+        }
+      }
       return arr;
     })();
   },
@@ -824,6 +854,36 @@ module.exports = {
           arr = arr.concat(good);
         }
       }
+      }
+      var result=new Array();
+      for (let j in arr) {
+        var goodcontact=await personTemporary.findOne({
+          where:{
+            good_id:arr[j].good_id
+          }
+        })
+        result[j]={
+          createdAt: arr[j].createdAt,
+          deliver: arr[j].deliver,
+          deliver_time: arr[j].deliver_time,
+          detail: arr[j].detail,
+          good_id: arr[j].good_id,
+          good_title: arr[j].good_title,
+          find_place: arr[j].find_place,
+          p1: arr[j].p1,
+          p2: arr[j].p2,
+          p3: arr[j].p3,
+          p4: arr[j].p4,
+          p5: arr[j].p5,
+          p6: arr[j].p6,
+          p7: arr[j].p7,
+          p8: arr[j].p8,
+          stateof: arr[j].stateof,
+          typeof: arr[j].typeof,
+          updatedAt: arr[j].updatedAt,
+          version:arr[j].version,
+          contacter:goodcontact.contacter
+        }
       }
       return arr;
     })();
