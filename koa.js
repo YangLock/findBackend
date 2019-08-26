@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'develop'
+
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
