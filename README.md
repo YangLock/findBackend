@@ -28,7 +28,7 @@ koa|2.0.0|-
 
 ## ENV
 ENV|value
----|:--:|---:
+---|---:
 NODE_ENV| develop 、test、 production
 
 
