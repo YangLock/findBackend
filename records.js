@@ -828,7 +828,7 @@ module.exports = {
           contacter:goodcontact.contacter
         }
       }
-      return arr;
+      return result;
     })();
   },
   compare: compare,
@@ -887,7 +887,7 @@ module.exports = {
           contacter:goodcontact.contacter
         }
       }
-      return arr;
+      return result;
     })();
   },
   getonegood:(good_id)=>{
