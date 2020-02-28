@@ -222,7 +222,8 @@ module.exports = {
           good_id: id
         }
       });
-      good_tem.destroy().then(find_goods.destroy());
+      good_tem.destroy();
+      find_goods.destroy();
     })();
   },
   deleteRecordFromPerson: (id) => {
@@ -237,7 +238,8 @@ module.exports = {
           good_id: id
         }
       });
-      good_tem.destroy().then(find_people.destroy());
+      good_tem.destroy();
+      find_people.destroy();
     })();
   },
   confirmRecordFromGood: (id) => {
