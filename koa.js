@@ -34,7 +34,7 @@ var storage = multer.diskStorage({
   var upload = multer({ storage: storage });
   //路由
   router.post('/upload', upload.single('file'), async (ctx, next) => {
-    var picurl='http://localhost:3000/uploads/'
+    var picurl='/uploads/'
     ctx.body = {
       file: picurl+ctx.req.file.filename//返回文件名
     }

@@ -50,10 +50,6 @@ module.exports = {
   'GET /getmessage/:user_id': async(ctx, next) => {
     var user_id = ctx.params.user_id;
     var com=await records.getmessage(user_id);
-    // console.log(`find ${userInfor.length} user:`);
-    // for (let p of com) {
-    //     console.log(JSON.stringify(p));
-    // }
     ctx.response.body = com;
   },
   'DELETE /api/delete/findGood/:id': async(ctx, next) => {
@@ -63,7 +59,7 @@ module.exports = {
   },
   'DELETE /api/delete/findPerson/:id': async(ctx, next) => {
     console.log(`delete record ${ctx.params.id}...`);
-    records.deleteRecordFromPerson(ctx.params.id);
+    await records.deleteRecordFromPerson(ctx.params.id);
     ctx.response.body="ok"
   },
   'PUT /api/foundConfirm/:id': async(ctx, next) => {
